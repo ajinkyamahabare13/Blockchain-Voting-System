@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Vote Successful</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<style>
+
+body{
+    background:#eef2f7;
+}
+
+.card{
+    max-width:800px;
+    margin:auto;
+    margin-top:60px;
+    border:none;
+    border-radius:20px;
+    box-shadow:0 12px 30px rgba(0,0,0,.15);
+}
+
+.success-icon{
+    font-size:90px;
+    color:#198754;
+}
+
+.hash-box{
+    background:#f8f9fa;
+    border-radius:10px;
+    padding:15px;
+    word-break:break-all;
+    font-size:14px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card p-5 text-center">
+
+<div class="success-icon mb-4">
+
+<i class="fa-solid fa-circle-check"></i>
+
+</div>
+
+<h2 class="text-success">
+
+Vote Successfully Cast!
+
+</h2>
+
+<hr>
+
+<h4>
+
+Candidate Selected
+
+</h4>
+
+<h3 class="text-primary">
+
+{{ candidate_name }}
+
+</h3>
+
+<hr>
+
+<h5>
+
+Blockchain Transaction Hash
+
+</h5>
+
+<div class="hash-box">
+
+{{ tx_hash }}
+
+</div>
+
+<div class="mt-4">
+
+<span class="badge bg-success fs-6">
+
+Blockchain Verified
+
+</span>
+
+</div>
+
+<div class="mt-5">
+
+<a href="/dashboard" class="btn btn-primary btn-lg">
+
+Back to Dashboard
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

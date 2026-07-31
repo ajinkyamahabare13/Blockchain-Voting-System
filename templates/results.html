@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Election Results</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+body{
+    background:#eef2f7;
+}
+
+.header{
+    background:linear-gradient(135deg,#198754,#0d6efd);
+    color:white;
+    border-radius:20px;
+    padding:35px;
+    text-align:center;
+    margin-bottom:35px;
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+}
+
+.card{
+    border:none;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.progress{
+    height:25px;
+    border-radius:30px;
+}
+
+.table{
+    background:white;
+}
+
+.winner{
+    color:#198754;
+    font-weight:bold;
+    font-size:22px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container mt-4">
+
+<div class="header">
+
+<h2>
+
+🏆 Election Results Dashboard
+
+</h2>
+
+<p>
+
+Blockchain Based Voting System
+
+</p>
+
+<p>
+
+Last Updated:
+<span id="time"></span>
+
+</p>
+
+</div>
+
+<div class="row mb-4">
+
+<div class="col-lg-4">
+
+<div class="card p-4 text-center">
+
+<h5>Total Candidates</h5>
+
+<h2>{{ candidates|length }}</h2>
+
+</div>
+
+</div>
+
+<div class="col-lg-4">
+
+<div class="card p-4 text-center">
+
+<h5>Total Votes</h5>
+
+<h2>{{ total_votes }}</h2>
+
+</div>
+
+</div>
+
+<div class="col-lg-4">
+
+<div class="card p-4 text-center">
+
+<h5>Current Winner</h5>
+
+{% if winner %}
+
+<div class="winner">
+
+🏆 {{ winner.name }}
+
+<br>
+
+<small>{{ winner.party }}</small>
+
+</div>
+
+{% else %}
+
+No Winner Yet
+
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="col-lg-6">
+
+<div class="card p-4">
+
+<h4 class="text-center mb-4">
+
+Vote Distribution
+
+</h4>
+
+<canvas id="barChart"></canvas>
+
+</div>
+
+</div>
+
+<div class="col-lg-6">
+
+<div class="card p-4">
+
+<h4 class="text-center mb-4">
+
+Vote Share
+
+</h4>
+
+<canvas id="pieChart"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card mt-5 p-4">
+
+<h3 class="mb-4">
+
+Candidate Results
+
+</h3>
+
+<table class="table table-bordered table-hover text-center">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>ID</th>
+
+<th>Name</th>
+
+<th>Party</th>
+
+<th>Votes</th>
+
+<th>Progress</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for candidate in candidates %}
+
+<tr>
+
+<td>{{ candidate.id }}</td>
+
+<td>{{ candidate.name }}</td>
+
+<td>{{ candidate.party }}</td>
+
+<td>{{ candidate.votes }}</td>
+
+<td width="35%">
+
+<div class="progress">
+
+{% set percentage = 0 %}
+{% if total_votes > 0 %}
+    {% set percentage = (candidate.votes / total_votes * 100)|round(1) %}
+{% endif %}
+
+<div
+class="progress-bar bg-success"
+style="width: {{ percentage }}%;">
+
+{{ percentage }}%
+
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+<div class="text-center mt-4 mb-5">
+
+<a href="/dashboard"
+class="btn btn-primary">
+
+Back to Dashboard
+
+</a>
+
+</div>
+
+</div>
+
+<!-- Live Clock -->
+<script>
+
+function updateTime(){
+
+    const now = new Date();
+
+    document.getElementById("time").innerHTML =
+    now.toLocaleTimeString();
+
+}
+
+updateTime();
+
+setInterval(updateTime,1000);
+
+</script>
+
+<!-- Auto Refresh -->
+<script>
+
+setInterval(function(){
+
+    location.reload();
+
+},5000);
+
+</script>
+
+<!-- Charts -->
+<script>
+
+const labels = {{ chart_labels | tojson | safe }};
+const votes = {{ chart_votes | tojson | safe }};
+
+new Chart(document.getElementById("barChart"),{
+
+type:"bar",
+
+data:{
+
+labels:labels,
+
+datasets:[{
+
+label:"Votes",
+
+data:votes,
+
+backgroundColor:[
+"#0d6efd",
+"#198754",
+"#ffc107",
+"#dc3545",
+"#6610f2",
+"#20c997"
+]
+
+}]
+
+},
+
+options:{
+responsive:true,
+plugins:{
+legend:{
+display:false
+}
+}
+}
+
+});
+
+new Chart(document.getElementById("pieChart"),{
+
+type:"pie",
+
+data:{
+
+labels:labels,
+
+datasets:[{
+
+data:votes,
+
+backgroundColor:[
+"#0d6efd",
+"#198754",
+"#ffc107",
+"#dc3545",
+"#6610f2",
+"#20c997"
+]
+
+}]
+
+}
+
+});
+
+</script>
+
+new Chart(document.getElementById("barChart"),{
+
+type:"bar",
+
+data:{
+
+labels:labels,
+
+datasets:[{
+
+label:"Votes",
+
+data:votes,
+
+backgroundColor:[
+"#0d6efd",
+"#198754",
+"#ffc107",
+"#dc3545",
+"#6610f2",
+"#20c997"
+]
+
+}]
+
+},
+
+options:{
+responsive:true,
+plugins:{
+legend:{
+display:false
+}
+}
+}
+
+});
+
+new Chart(document.getElementById("pieChart"),{
+
+type:"pie",
+
+data:{
+
+labels:labels,
+
+datasets:[{
+
+data:votes,
+
+backgroundColor:[
+"#0d6efd",
+"#198754",
+"#ffc107",
+"#dc3545",
+"#6610f2",
+"#20c997"
+]
+
+}]
+
+}
+
+});
+
+</script>
+
+</body>
+
+</html>
