@@ -3,725 +3,1970 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Election Results</title>
+    <title>Election Results | Blockchain Voting System</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    >
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<style>
 
-body{
-    background:#eef2f7;
-    font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f7fb;
+            font-family:
+            "Segoe UI",
+            Arial,
+            Helvetica,
+            sans-serif;
+            color: #1f2937;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar-custom {
+            background: linear-gradient(
+                135deg,
+                #0d6efd,
+                #6610f2
+            );
+
+            padding: 16px 0;
+
+            box-shadow:
+                0 5px 20px rgba(0,0,0,.15);
+        }
+
+        .brand {
+            color: white;
+            font-size: 21px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .brand-icon {
+    width: 36px;
+    height: 36px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255,255,255,.18);
+
+    border-radius: 10px;
+
+    margin-right: 10px;
 }
 
-.header{
-    background:linear-gradient(135deg,#198754,#0d6efd);
-    color:white;
-    padding:35px;
-    border-radius:20px;
-    text-align:center;
-    margin-bottom:35px;
-    box-shadow:0 12px 30px rgba(0,0,0,.20);
+.brand-icon i {
+    margin: 0;
+    font-size: 17px;
 }
 
-.card{
-    border:none;
-    border-radius:18px;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
-    transition:.3s;
+        .nav-link-custom {
+            color: rgba(255,255,255,.9);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-link-custom:hover {
+            color: white;
+        }
+
+
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
+
+        .main-container {
+            max-width: 1250px;
+            margin: auto;
+            padding: 35px 20px 50px;
+        }
+
+
+        /* =========================
+           FLASH / VERIFICATION
+        ========================= */
+
+        .verification-card {
+        border-radius: 16px;
+
+        padding: 18px 22px;
+
+        border: 1px solid transparent;
+
+        box-shadow:
+        0 6px 18px rgba(0,0,0,.06);
+
+        font-size: 14px;
+        }
+
+
+        /* =========================
+           HERO HEADER
+        ========================= */
+
+        .results-header {
+            position: relative;
+            overflow: hidden;
+
+            background: linear-gradient(
+                135deg,
+                #198754,
+                #0d6efd,
+                #6610f2
+            );
+
+            color: white;
+
+            padding: 42px 30px;
+
+            border-radius: 25px;
+
+            text-align: center;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 15px 35px rgba(13,110,253,.22);
+        }
+
+        .results-header::before {
+            content: "";
+
+            position: absolute;
+
+            width: 250px;
+            height: 250px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,.07);
+
+            right: -80px;
+            top: -110px;
+        }
+
+        .results-header::after {
+            content: "";
+
+            position: absolute;
+
+            width: 170px;
+            height: 170px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,.06);
+
+            left: -70px;
+            bottom: -100px;
+        }
+
+        .results-header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .results-icon {
+            width: 72px;
+            height: 72px;
+
+            border-radius: 20px;
+
+            background: rgba(255,255,255,.14);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin: 0 auto 18px;
+
+            font-size: 30px;
+        }
+
+        .results-header h1 {
+    font-size: 32px;
+    font-weight: 750;
+
+    letter-spacing: -.5px;
+
+    margin-bottom: 10px;
 }
 
-.card:hover{
-    transform:translateY(-5px);
+        .results-header p {
+        margin-bottom: 8px;
+
+        color: rgba(255,255,255,.9);
+
+        font-size: 15px;
+
+        line-height: 1.6;
+        }
+
+        .update-time {
+            font-size: 13px;
+            color: rgba(255,255,255,.75);
+        }
+
+
+        /* =========================
+           SECTION TITLE
+        ========================= */
+
+        .section-title {
+        font-size: 23px;
+
+        font-weight: 750;
+
+        letter-spacing: -.3px;
+
+        margin-bottom: 7px;
+        }
+
+        .section-subtitle {
+            color: #6b7280;
+            font-size: 14px;
+
+            margin-bottom: 22px;
+        }
+
+
+        /* =========================
+           SUMMARY CARD
+        ========================= */
+
+        .summary-card {
+        background: white;
+
+        border: 1px solid #e9edf4;
+
+        border-radius: 20px;
+
+        box-shadow:
+        0 8px 25px rgba(0,0,0,.06);
+
+        height: 100%;
+
+        transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+         }
+
+        .summary-card:hover {
+        transform: translateY(-4px);
+
+        box-shadow:
+        0 14px 30px rgba(0,0,0,.10);
+        }
+
+        .summary-card:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 13px 28px rgba(0,0,0,.11);
+        }
+
+        .summary-icon {
+            width: 52px;
+            height: 52px;
+
+            border-radius: 15px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin: 0 auto 12px;
+
+            font-size: 20px;
+        }
+
+        .summary-card h6 {
+            color: #6b7280;
+
+            font-size: 13px;
+
+            margin-bottom: 8px;
+        }
+
+        .summary-card h3 {
+            font-size: 27px;
+            font-weight: 700;
+
+            margin: 0;
+        }
+
+        .summary-footer {
+            margin-top: 22px;
+
+            padding-top: 18px;
+
+            border-top: 1px solid #eef0f3;
+        }
+
+
+        /* =========================
+           STAT ICONS
+        ========================= */
+
+        .blue-bg {
+            background: #e8f1ff;
+            color: #0d6efd;
+        }
+
+        .green-bg {
+            background: #e8f7ef;
+            color: #198754;
+        }
+
+        .yellow-bg {
+            background: #fff6dc;
+            color: #d99a00;
+        }
+
+        .purple-bg {
+            background: #f0e9ff;
+            color: #6610f2;
+        }
+
+        .red-bg {
+            background: #fdebec;
+            color: #dc3545;
+        }
+
+
+        /* =========================
+           WINNER SECTION
+        ========================= */
+
+        .winner-card {
+    background: linear-gradient(
+        135deg,
+        #fffdf5,
+        #fff8df
+    );
+
+    border: 1px solid #ffe5a3;
+
+    border-radius: 22px;
+
+    padding: 30px;
+
+    height: 100%;
+
+    text-align: center;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.06);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
 }
 
-.summary-card h5{
-    color:#666;
+.winner-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 14px 30px rgba(217,154,0,.12);
 }
 
-.summary-card h2{
-    font-weight:bold;
+        .winner-crown {
+            width: 65px;
+            height: 65px;
+
+            border-radius: 50%;
+
+            background: #fff1b8;
+
+            color: #d99a00;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin: 0 auto 15px;
+
+            font-size: 27px;
+        }
+
+        .winner-name {
+            font-size: 25px;
+            font-weight: 700;
+
+            margin-bottom: 5px;
+        }
+
+        .winner-party {
+            color: #6b7280;
+
+            margin-bottom: 12px;
+        }
+
+        .winner-votes {
+            font-size: 24px;
+
+            font-weight: 700;
+
+            color: #198754;
+        }
+
+
+        /* =========================
+           RUNNER UP
+        ========================= */
+
+        .runner-card {
+    background: white;
+
+    border: 1px solid #e9edf4;
+
+    border-radius: 22px;
+
+    padding: 30px;
+
+    height: 100%;
+
+    text-align: center;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.06);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
 }
 
-.progress{
-    height:25px;
-    border-radius:30px;
+.runner-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 14px 30px rgba(0,0,0,.10);
 }
 
-.progress-bar{
-    font-weight:bold;
+        .runner-icon {
+            width: 65px;
+            height: 65px;
+
+            border-radius: 50%;
+
+            background: #edf0f3;
+
+            color: #6c757d;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin: 0 auto 15px;
+
+            font-size: 26px;
+        }
+
+        .runner-name {
+            font-size: 23px;
+
+            font-weight: 700;
+
+            margin-bottom: 5px;
+        }
+
+        .runner-party {
+            color: #6b7280;
+
+            margin-bottom: 12px;
+        }
+
+        .runner-votes {
+            font-size: 22px;
+
+            font-weight: 700;
+
+            color: #0d6efd;
+        }
+
+
+        /* =========================
+           TIE
+        ========================= */
+
+        .tie-card {
+            background: #f0f6ff;
+
+            border: 1px solid #b9d5ff;
+
+            border-radius: 20px;
+
+            padding: 25px;
+
+            text-align: center;
+        }
+
+        .tie-icon {
+            font-size: 35px;
+
+            color: #0d6efd;
+
+            margin-bottom: 10px;
+        }
+
+
+        /* =========================
+           CHARTS
+        ========================= */
+
+        .chart-card {
+    background: white;
+
+    border: 1px solid #e9edf4;
+
+    border-radius: 22px;
+
+    padding: 26px;
+
+    height: 100%;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.06);
 }
 
-.table{
-    background:white;
+        .chart-title {
+            font-size: 18px;
+
+            font-weight: 700;
+
+            margin-bottom: 5px;
+        }
+
+        .chart-description {
+            color: #6b7280;
+
+            font-size: 13px;
+
+            margin-bottom: 20px;
+        }
+
+        .chart-container {
+            position: relative;
+
+            height: 330px;
+        }
+
+
+        /* =========================
+           CANDIDATE TABLE
+        ========================= */
+
+        .results-table-card {
+            background: white;
+
+            border: none;
+
+            border-radius: 22px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,.07);
+        }
+
+        .results-table {
+            margin-bottom: 0;
+        }
+
+        .results-table thead th {
+    background: #111827;
+
+    color: white;
+
+    border: none;
+
+    padding: 16px 12px;
+
+    font-size: 13px;
+
+    font-weight: 650;
+
+    letter-spacing: .2px;
 }
 
-.table th{
-    vertical-align:middle;
+        .results-table tbody td {
+            padding: 14px 12px;
+
+            vertical-align: middle;
+
+            border-color: #edf0f3;
+        }
+
+        .results-table tbody tr {
+            transition: .2s;
+        }
+
+        .results-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .candidate-photo {
+            width: 52px;
+            height: 52px;
+
+            object-fit: cover;
+
+            border-radius: 50%;
+
+            border: 3px solid #e8f1ff;
+        }
+
+        .candidate-placeholder {
+            width: 52px;
+            height: 52px;
+
+            border-radius: 50%;
+
+            background: #eef2f7;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+        .candidate-info {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 12px;
+        }
+
+        .candidate-name-table {
+            font-weight: 700;
+
+            text-align: left;
+        }
+
+        .party-badge {
+            background: #eef2f7;
+
+            color: #4b5563;
+
+            border-radius: 20px;
+
+            padding: 7px 13px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+        .vote-badge {
+            background: #e8f7ef;
+
+            color: #198754;
+
+            border-radius: 20px;
+
+            padding: 7px 14px;
+
+            font-weight: 700;
+
+            font-size: 13px;
+        }
+
+        .progress {
+            height: 18px;
+
+            border-radius: 20px;
+
+            background: #edf0f3;
+        }
+
+        .progress-bar {
+            border-radius: 20px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+
+        /* =========================
+           STATUS BADGES
+        ========================= */
+
+        .status-badge {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 8px 15px;
+
+            border-radius: 30px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+        .status-open {
+            background: #e8f7ef;
+
+            color: #198754;
+        }
+
+        .status-closed {
+            background: #fdebec;
+
+            color: #dc3545;
+        }
+
+
+        /* =========================
+           BACK BUTTON
+        ========================= */
+
+        .back-section {
+            text-align: center;
+
+            margin-top: 35px;
+        }
+
+        .back-btn {
+    border: none;
+
+    border-radius: 12px;
+
+    padding: 12px 25px;
+
+    font-weight: 650;
+
+    background: linear-gradient(
+        135deg,
+        #0d6efd,
+        #6610f2
+    );
+
+    box-shadow:
+        0 7px 18px rgba(13,110,253,.18);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
 }
 
-.table td{
-    vertical-align:middle;
+.back-btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 24px rgba(13,110,253,.28);
 }
 
-.winner-card{
-    border-left:6px solid #ffc107;
-}
 
-.runner-card{
-    border-left:6px solid #6c757d;
-}
+        /* =========================
+           FOOTER
+        ========================= */
 
-.chart-card{
-    min-height:450px;
-}
+        .footer {
+            text-align: center;
 
-canvas{
-    max-height:330px;
-}
+            margin-top: 45px;
 
-</style>
+            padding-top: 25px;
+
+            border-top: 1px solid #e5e7eb;
+
+            color: #8a94a6;
+
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 768px) {
+
+            .main-container {
+                padding: 25px 15px 40px;
+            }
+
+            .results-header {
+                padding: 32px 20px;
+            }
+
+            .results-header h1 {
+                font-size: 27px;
+            }
+
+            .candidate-info {
+                justify-content: flex-start;
+            }
+
+            .candidate-name-table {
+                text-align: left;
+            }
+
+            .chart-container {
+                height: 270px;
+            }
+
+        }
+        /* =========================================
+        13.9 RESPONSIVE / MOBILE POLISH
+        ========================================= */
+
+        @media (max-width: 768px) {
+
+        body {
+        overflow-x: hidden;
+        }
+
+        .navbar {
+        padding: 10px 0;
+        }
+
+        .brand {
+        font-size: 16px;
+        }
+
+        .brand-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 9px;
+        margin-right: 8px;
+        }
+
+        .brand-icon i {
+        font-size: 15px;
+        }
+
+        .results-header {
+        padding: 30px 18px !important;
+        }
+
+        .results-header h1 {
+        font-size: 27px;
+        line-height: 1.25;
+        }
+
+        .results-header p {
+        font-size: 14px;
+        line-height: 1.55;
+        }
+
+        .verification-card {
+        padding: 15px 16px;
+        font-size: 13px;
+        border-radius: 15px;
+        }
+
+        .summary-card {
+        border-radius: 16px;
+        }
+
+        .winner-card,
+        .runner-card {
+        padding: 24px 18px;
+        border-radius: 18px;
+        }
+
+        .chart-card {
+        padding: 18px;
+        border-radius: 18px;
+        }
+
+        .section-title {
+        font-size: 21px;
+        }
+
+        .results-table {
+        min-width: 650px;
+        }
+
+        .table-responsive {
+        border-radius: 14px;
+        overflow-x: auto;
+        }
+
+        .back-btn {
+        width: 100%;
+        min-height: 44px;
+        }
+
+        canvas {
+        max-width: 100%;
+          }
+       }
+    </style>
 
 </head>
 
+
 <body>
 
-<div class="container mt-4">
 
-<!-- Header -->
+<!-- =========================
+     NAVBAR
+========================= -->
 
-<div class="header">
+<nav class="navbar-custom">
 
-<h2>
+    <div class="container">
 
-🏆 Election Results Dashboard
+        <div class="d-flex justify-content-between align-items-center">
 
-</h2>
+            <a
+             href="/dashboard"
+             class="brand"
+        >
+        <span class="brand-icon">
+        <i class="fa-solid fa-cube"></i>
+        </span>
 
-<p class="mb-1">
+    Blockchain Voting System
+</a>
 
-Blockchain Based Voting System
+            <a
+                href="/dashboard"
+                class="nav-link-custom"
+            >
 
-</p>
+                <i class="fa-solid fa-arrow-left me-1"></i>
 
-<p class="mb-0">
+                Dashboard
 
-Last Updated :
-<strong id="time"></strong>
-
-</p>
-
-</div>
-
-<!-- Election Summary -->
-
-<div class="card mb-4 shadow">
-
-<div class="card-header bg-dark text-white">
-
-<h4 class="mb-0">
-
-📋 Election Summary
-
-</h4>
-
-</div>
-
-<div class="card-body">
-
-<div class="row text-center">
-
-<div class="col-md-3 summary-card">
-
-<h5>👥 Registered Users</h5>
-
-<h2 class="text-primary">
-
-{{ total_users }}
-
-</h2>
-
-</div>
-
-<div class="col-md-3 summary-card">
-
-<h5>🗳 Votes Cast</h5>
-
-<h2 class="text-success">
-
-{{ total_votes }}
-
-</h2>
-
-</div>
-
-<div class="col-md-3 summary-card">
-
-<h5>📈 Voting Percentage</h5>
-
-<h2 class="text-warning">
-
-{{ voting_percentage }}%
-
-</h2>
-
-</div>
-
-<div class="col-md-3 summary-card">
-
-<h5>📢 Election Status</h5>
-
-{% if election_status=="Open" %}
-
-<h2 class="text-success">
-
-🟢 OPEN
-
-</h2>
-
-{% else %}
-
-<h2 class="text-danger">
-
-🔴 CLOSED
-
-</h2>
-
-{% endif %}
-
-</div>
-
-</div>
-
-<hr>
-
-<div class="text-center">
-
-<h5>
-
-🏆 Winning Margin
-
-</h5>
-
-<h2 class="text-info">
-
-{{ winning_margin }} Vote(s)
-
-</h2>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- Statistics Cards -->
-
-<div class="row mb-4">
-
-<div class="col-lg-3 mb-3">
-
-<div class="card p-4 text-center">
-
-<h5>Total Candidates</h5>
-
-<h2>
-
-{{ candidates|length }}
-
-</h2>
-
-</div>
-
-</div>
-
-<div class="col-lg-3 mb-3">
-
-<div class="card p-4 text-center">
-
-<h5>Total Votes</h5>
-
-<h2>
-
-{{ total_votes }}
-
-</h2>
-
-</div>
-
-</div>
-
-<div class="col-lg-3 mb-3">
-
-<div class="card p-4 text-center winner-card">
-
-<h4 class="text-warning">
-
-👑 Winner
-
-</h4>
-
-{% if winner %}
-
-<h2 class="mt-3">
-
-{{ winner.name }}
-
-</h2>
-
-<h5>
-
-{{ winner.party }}
-
-</h5>
-
-<h3 class="text-success">
-
-{{ winner.votes }} Votes
-
-</h3>
-
-{% if total_votes>0 %}
-
-<p>
-
-Vote Share :
-
-<strong>
-
-{{ ((winner.votes/total_votes)*100)|round(2) }}%
-
-</strong>
-
-</p>
-
-{% endif %}
-
-{% else %}
-
-<h5>No Winner Yet</h5>
-
-{% endif %}
-
-</div>
-
-</div>
-
-<div class="col-lg-3 mb-3">
-
-<div class="card p-4 text-center runner-card">
-
-<h4 class="text-secondary">
-
-🥈 Runner-up
-
-</h4>
-
-{% if runner_up %}
-
-<h2 class="mt-3">
-
-{{ runner_up.name }}
-
-</h2>
-
-<h5>
-
-{{ runner_up.party }}
-
-</h5>
-
-<h3 class="text-primary">
-
-{{ runner_up.votes }} Votes
-
-</h3>
-
-{% if total_votes>0 %}
-
-<p>
-
-Vote Share :
-
-<strong>
-
-{{ ((runner_up.votes/total_votes)*100)|round(2) }}%
-
-</strong>
-
-</p>
-
-{% endif %}
-
-{% else %}
-
-<h5>No Runner-up</h5>
-
-{% endif %}
-
-</div>
-
-</div>
-
-</div>
-
-<!-- Charts -->
-
-<div class="row mb-5">
-
-    <!-- Bar Chart -->
-
-    <div class="col-lg-6 mb-4">
-
-        <div class="card chart-card p-4">
-
-            <h4 class="text-center mb-4">
-
-                📊 Candidate Votes
-
-            </h4>
-
-            <canvas id="barChart"></canvas>
+            </a>
 
         </div>
 
     </div>
 
-    <!-- Pie Chart -->
+</nav>
 
-    <div class="col-lg-6 mb-4">
 
-        <div class="card chart-card p-4">
+<!-- =========================
+     MAIN
+========================= -->
 
-            <h4 class="text-center mb-4">
+<div class="main-container">
 
-                🥧 Vote Share
 
-            </h4>
+    <!-- =========================
+         HEADER
+    ========================= -->
 
-            <canvas id="pieChart"></canvas>
+    <div class="results-header">
+
+        <div class="results-header-content">
+
+            <div class="results-icon">
+
+                <i class="fa-solid fa-trophy"></i>
+
+            </div>
+
+            <h1>
+
+                Election Results
+
+            </h1>
+
+            <p>
+
+                Blockchain Based Voting System
+
+            </p>
+
+            <div class="update-time">
+
+                <i class="fa-regular fa-clock me-1"></i>
+
+                Last Updated:
+                <strong id="time"></strong>
+
+            </div>
 
         </div>
 
     </div>
 
-</div>
 
-<!-- Candidate Result Table -->
+    <!-- =========================
+         BLOCKCHAIN VERIFICATION
+    ========================= -->
 
-<div class="card p-4 shadow">
+    {% if blockchain_verified %}
 
-    <h3 class="mb-4">
+        <div class="alert alert-success verification-card text-center mb-4">
 
-        🗳 Candidate Results
+            <div class="fs-5 mb-1">
 
-    </h3>
+                <i class="fa-solid fa-shield-halved me-2"></i>
 
-    <div class="table-responsive">
+                <strong>Blockchain Verified</strong>
 
-        <table class="table table-bordered table-hover text-center align-middle">
+            </div>
 
-            <thead class="table-dark">
+            <small>
 
-                <tr>
+                Database votes and blockchain votes are matching.
 
-                    <th>ID</th>
+            </small>
 
-                    <th>Candidate</th>
+        </div>
 
-                    <th>Party</th>
+    {% else %}
 
-                    <th>Votes</th>
+        <div class="alert alert-danger verification-card text-center mb-4">
 
-                    <th width="35%">Vote Share</th>
+            <div class="fs-5 mb-1">
 
-                </tr>
+                <i class="fa-solid fa-triangle-exclamation me-2"></i>
 
-            </thead>
+                <strong>Data Mismatch Detected</strong>
 
-            <tbody>
+            </div>
 
-            {% for candidate in candidates %}
+            <small>
 
-                {% set percentage = 0 %}
+                Database votes and blockchain votes do not match.
 
-                {% if total_votes > 0 %}
+            </small>
 
-                    {% set percentage = (candidate.votes / total_votes * 100)|round(1) %}
+        </div>
+
+    {% endif %}
+
+
+    <!-- =========================
+         ELECTION OVERVIEW
+    ========================= -->
+
+    <div class="section-title">
+
+        Election Overview
+
+    </div>
+
+    <div class="section-subtitle">
+
+        Current election statistics and voting status
+
+    </div>
+
+
+    <div class="row g-4 mb-5">
+
+
+        <!-- USERS -->
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="summary-card p-4 text-center">
+
+                <div class="summary-icon blue-bg">
+
+                    <i class="fa-solid fa-users"></i>
+
+                </div>
+
+                <h6>
+
+                    Registered Users
+
+                </h6>
+
+                <h3 class="text-primary">
+
+                    {{ total_users }}
+
+                </h3>
+
+            </div>
+
+        </div>
+
+
+        <!-- VOTES -->
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="summary-card p-4 text-center">
+
+                <div class="summary-icon green-bg">
+
+                    <i class="fa-solid fa-check-to-slot"></i>
+
+                </div>
+
+                <h6>
+
+                    Votes Cast
+
+                </h6>
+
+                <h3 class="text-success">
+
+                    {{ total_votes }}
+
+                </h3>
+
+            </div>
+
+        </div>
+
+
+        <!-- VOTING PERCENTAGE -->
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="summary-card p-4 text-center">
+
+                <div class="summary-icon yellow-bg">
+
+                    <i class="fa-solid fa-chart-line"></i>
+
+                </div>
+
+                <h6>
+
+                    Voting Percentage
+
+                </h6>
+
+                <h3 class="text-warning">
+
+                    {{ voting_percentage }}%
+
+                </h3>
+
+            </div>
+
+        </div>
+
+
+        <!-- ELECTION STATUS -->
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="summary-card p-4 text-center">
+
+                <div class="summary-icon purple-bg">
+
+                    <i class="fa-solid fa-bullhorn"></i>
+
+                </div>
+
+                <h6>
+
+                    Election Status
+
+                </h6>
+
+                {% if election_status == "Open" %}
+
+                    <span class="status-badge status-open">
+
+                        <i class="fa-solid fa-circle"></i>
+
+                        OPEN
+
+                    </span>
+
+                {% else %}
+
+                    <span class="status-badge status-closed">
+
+                        <i class="fa-solid fa-circle"></i>
+
+                        CLOSED
+
+                    </span>
 
                 {% endif %}
 
-                <tr>
+            </div>
 
-                    <td>
+        </div>
 
-                        {{ candidate.id }}
+    </div>
 
-                    </td>
 
-                    <td>
+    <!-- =========================
+         WINNING MARGIN
+    ========================= -->
 
-                        <strong>{{ candidate.name }}</strong>
+    <div class="summary-card p-4 text-center mb-5">
 
-                    </td>
+        <div class="summary-icon blue-bg">
 
-                    <td>
+            <i class="fa-solid fa-medal"></i>
 
-                        {{ candidate.party }}
+        </div>
 
-                    </td>
+        <h6>
 
-                    <td>
+            Winning Margin
 
-                        <span class="badge bg-success fs-6">
+        </h6>
 
-                            {{ candidate.votes }}
+        <h3 class="text-info">
 
-                        </span>
+            {{ winning_margin }} Vote(s)
 
-                    </td>
+        </h3>
 
-                    <td>
+    </div>
 
-                        <div class="progress">
 
-                            <div
+    <!-- =========================
+         WINNER / RUNNER UP
+    ========================= -->
 
-                                class="progress-bar bg-success"
+    <div class="section-title">
 
-                                role="progressbar"
+        Final Standing
 
-                                style="width: {{ percentage }}%;"
+    </div>
 
-                                aria-valuenow="{{ percentage }}"
+    <div class="section-subtitle">
 
-                                aria-valuemin="0"
+        Leading candidates based on recorded votes
 
-                                aria-valuemax="100">
+    </div>
 
-                                {{ percentage }}%
+
+    {% if tie %}
+
+        <div class="tie-card mb-5">
+
+            <div class="tie-icon">
+
+                <i class="fa-solid fa-scale-balanced"></i>
+
+            </div>
+
+            <h4 class="fw-bold">
+
+                Election Result: Tie
+
+            </h4>
+
+            <p class="text-muted">
+
+                The election has ended in a tie between:
+
+            </p>
+
+            <div class="row g-3 justify-content-center">
+
+                {% for candidate in tied_candidates %}
+
+                    <div class="col-md-4">
+
+                        <div class="bg-white rounded-4 p-3 shadow-sm">
+
+                            <h5 class="fw-bold mb-1">
+
+                                {{ candidate.name }}
+
+                            </h5>
+
+                            <div class="text-muted small">
+
+                                {{ candidate.party }}
+
+                            </div>
+
+                            <div class="text-success fw-bold mt-2">
+
+                                {{ candidate.votes }} Votes
 
                             </div>
 
                         </div>
 
-                    </td>
+                    </div>
 
-                </tr>
+                {% endfor %}
 
-            {% endfor %}
+            </div>
 
-            </tbody>
+        </div>
 
-        </table>
+    {% else %}
+
+        <div class="row g-4 mb-5">
+
+
+            <!-- WINNER -->
+
+            <div class="col-lg-6">
+
+                <div class="winner-card">
+
+                    <div class="winner-crown">
+
+                        <i class="fa-solid fa-crown"></i>
+
+                    </div>
+
+                    <h5 class="text-warning fw-bold">
+
+                        WINNER
+
+                    </h5>
+
+                    {% if winner %}
+
+                        <div class="winner-name">
+
+                            {{ winner.name }}
+
+                        </div>
+
+                        <div class="winner-party">
+
+                            {{ winner.party }}
+
+                        </div>
+
+                        <div class="winner-votes">
+
+                            {{ winner.votes }} Votes
+
+                        </div>
+
+                        {% if total_votes > 0 %}
+
+                            <div class="text-muted small mt-2">
+
+                                Vote Share:
+
+                                <strong>
+
+                                    {{ ((winner.votes / total_votes) * 100)|round(2) }}%
+
+                                </strong>
+
+                            </div>
+
+                        {% endif %}
+
+                    {% else %}
+
+                        <div class="text-muted mt-3">
+
+                            No Winner Yet
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- RUNNER UP -->
+
+            <div class="col-lg-6">
+
+                <div class="runner-card">
+
+                    <div class="runner-icon">
+
+                        <i class="fa-solid fa-medal"></i>
+
+                    </div>
+
+                    <h5 class="text-secondary fw-bold">
+
+                        RUNNER-UP
+
+                    </h5>
+
+                    {% if runner_up %}
+
+                        <div class="runner-name">
+
+                            {{ runner_up.name }}
+
+                        </div>
+
+                        <div class="runner-party">
+
+                            {{ runner_up.party }}
+
+                        </div>
+
+                        <div class="runner-votes">
+
+                            {{ runner_up.votes }} Votes
+
+                        </div>
+
+                        {% if total_votes > 0 %}
+
+                            <div class="text-muted small mt-2">
+
+                                Vote Share:
+
+                                <strong>
+
+                                    {{ ((runner_up.votes / total_votes) * 100)|round(2) }}%
+
+                                </strong>
+
+                            </div>
+
+                        {% endif %}
+
+                    {% else %}
+
+                        <div class="text-muted mt-3">
+
+                            No Runner-up
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- =========================
+         ANALYTICS
+    ========================= -->
+
+    <div class="section-title">
+
+        Election Analytics
+
+    </div>
+
+    <div class="section-subtitle">
+
+        Visual representation of votes received by candidates
+
+    </div>
+
+
+    <div class="row g-4 mb-5">
+
+
+        <!-- BAR CHART -->
+
+        <div class="col-lg-7">
+
+            <div class="chart-card">
+
+                <div class="chart-title">
+
+                    <i class="fa-solid fa-chart-column text-primary me-2"></i>
+
+                    Candidate Votes
+
+                </div>
+
+                <div class="chart-description">
+
+                    Total votes recorded for each candidate
+
+                </div>
+
+                <div class="chart-container">
+
+                    <canvas id="barChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PIE CHART -->
+
+        <div class="col-lg-5">
+
+            <div class="chart-card">
+
+                <div class="chart-title">
+
+                    <i class="fa-solid fa-chart-pie text-success me-2"></i>
+
+                    Vote Share
+
+                </div>
+
+                <div class="chart-description">
+
+                    Percentage distribution of votes
+
+                </div>
+
+                <div class="chart-container">
+
+                    <canvas id="pieChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         CANDIDATE RESULTS
+    ========================= -->
+
+    <div class="section-title">
+
+        Candidate Results
+
+    </div>
+
+    <div class="section-subtitle">
+
+        Detailed candidate-wise voting information
+
+    </div>
+
+
+    <div class="results-table-card mb-4">
+
+        <div class="table-responsive">
+
+            <table class="table results-table text-center align-middle">
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Candidate</th>
+
+                        <th>Party</th>
+
+                        <th>Votes</th>
+
+                        <th style="min-width: 250px;">
+
+                            Vote Share
+
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for candidate in candidates %}
+
+                        {% set percentage = 0 %}
+
+                        {% if total_votes > 0 %}
+
+                            {% set percentage = (candidate.votes / total_votes * 100)|round(1) %}
+
+                        {% endif %}
+
+
+                        <tr>
+
+
+                            <!-- ID -->
+
+                            <td>
+
+                                <span class="badge bg-light text-dark border">
+
+                                    {{ candidate.id }}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- CANDIDATE -->
+
+                            <td>
+
+                                <div class="candidate-info">
+
+                                    {% if candidate.photo %}
+
+                                        <img
+                                            src="{{ url_for('static', filename='uploads/' + candidate.photo) }}"
+                                            alt="{{ candidate.name }}"
+                                            class="candidate-photo"
+                                        >
+
+                                    {% else %}
+
+                                        <div class="candidate-placeholder">
+
+                                            <i class="fa-solid fa-user-tie text-primary"></i>
+
+                                        </div>
+
+                                    {% endif %}
+
+                                    <div class="candidate-name-table">
+
+                                        {{ candidate.name }}
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- PARTY -->
+
+                            <td>
+
+                                <span class="party-badge">
+
+                                    {{ candidate.party }}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- VOTES -->
+
+                            <td>
+
+                                <span class="vote-badge">
+
+                                    {{ candidate.votes }}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- SHARE -->
+
+                            <td>
+
+                                <div class="progress">
+
+                                    <div
+                                        class="progress-bar bg-success"
+                                        role="progressbar"
+                                        style="width: {{ percentage }}%;"
+                                        aria-valuenow="{{ percentage }}"
+                                        aria-valuemin="0"
+                                        aria-valuemax="100"
+                                    >
+
+                                        {{ percentage }}%
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         BACK BUTTON
+    ========================= -->
+
+    <div class="back-section">
+
+        <a
+            href="/dashboard"
+            class="btn btn-primary btn-lg back-btn"
+        >
+
+            <i class="fa-solid fa-arrow-left me-2"></i>
+
+            Back to Dashboard
+
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <div class="footer">
+
+        <i class="fa-solid fa-shield-halved me-1"></i>
+
+        Blockchain Voting System V3.0
+
+        <span class="mx-2">•</span>
+
+        Secure • Transparent • Decentralized
 
     </div>
 
 </div>
 
-<!-- Back Button -->
 
-<div class="text-center mt-5 mb-4">
+<!-- =========================
+     BOOTSTRAP
+========================= -->
 
-    <a href="/dashboard"
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js">
+</script>
 
-       class="btn btn-primary btn-lg">
 
-        <i class="fa-solid fa-arrow-left"></i>
+<!-- =========================
+     LIVE TIME
+========================= -->
 
-        Back to Dashboard
-
-    </a>
-
-</div>
-
-<!-- Live Clock -->
 <script>
 
-function updateTime() {
+    function updateTime() {
 
-    const now = new Date();
+        const now = new Date();
 
-    document.getElementById("time").innerHTML =
-        now.toLocaleTimeString();
+        document.getElementById("time").innerHTML =
+            now.toLocaleTimeString();
 
-}
+    }
 
-updateTime();
+    updateTime();
 
-setInterval(updateTime, 1000);
+    setInterval(updateTime, 1000);
 
 </script>
 
-<!-- Chart.js -->
+
+<!-- =========================
+     CHARTS
+========================= -->
 
 <script>
 
-const labels = {{ chart_labels | tojson | safe }};
-const votes = {{ chart_votes | tojson | safe }};
+    const labels = {{ chart_labels | tojson | safe }};
 
-// ==========================
-// Bar Chart
-// ==========================
+    const votes = {{ chart_votes | tojson | safe }};
 
-new Chart(document.getElementById("barChart"), {
 
-    type: "bar",
+    /* =========================
+       BAR CHART
+    ========================= */
 
-    data: {
+    new Chart(
+        document.getElementById("barChart"),
+        {
 
-        labels: labels,
+            type: "bar",
 
-        datasets: [{
+            data: {
 
-            label: "Votes",
+                labels: labels,
 
-            data: votes,
+                datasets: [
 
-            borderRadius: 10,
+                    {
 
-            backgroundColor: [
+                        label: "Votes",
 
-                "#0d6efd",
+                        data: votes,
 
-                "#198754",
+                        backgroundColor: [
 
-                "#ffc107",
+                            "#0d6efd",
+                            "#198754",
+                            "#ffc107",
+                            "#dc3545",
+                            "#6610f2",
+                            "#20c997",
+                            "#fd7e14",
+                            "#6f42c1"
 
-                "#dc3545",
+                        ],
 
-                "#6610f2",
+                        borderRadius: 10,
 
-                "#20c997",
+                        borderWidth: 0
 
-                "#fd7e14",
+                    }
 
-                "#6f42c1"
+                ]
 
-            ]
+            },
 
-        }]
+            options: {
 
-    },
+                responsive: true,
 
-    options: {
+                maintainAspectRatio: false,
 
-        responsive: true,
+                scales: {
 
-        maintainAspectRatio: false,
+                    y: {
 
-        scales: {
+                        beginAtZero: true,
 
-            y: {
+                        ticks: {
 
-                beginAtZero: true,
+                            precision: 0
 
-                ticks: {
+                        }
 
-                    precision: 0
+                    }
+
+                },
+
+                plugins: {
+
+                    legend: {
+
+                        display: false
+
+                    }
 
                 }
 
             }
 
-        },
+        }
+    );
 
-        plugins: {
 
-            legend: {
+    /* =========================
+       PIE CHART
+    ========================= */
 
-                display: false
+    new Chart(
+        document.getElementById("pieChart"),
+        {
+
+            type: "pie",
+
+            data: {
+
+                labels: labels,
+
+                datasets: [
+
+                    {
+
+                        data: votes,
+
+                        backgroundColor: [
+
+                            "#0d6efd",
+                            "#198754",
+                            "#ffc107",
+                            "#dc3545",
+                            "#6610f2",
+                            "#20c997",
+                            "#fd7e14",
+                            "#6f42c1"
+
+                        ],
+
+                        borderWidth: 3,
+
+                        borderColor: "#ffffff"
+
+                    }
+
+                ]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: {
+
+                        position: "bottom",
+
+                        labels: {
+
+                            padding: 15,
+
+                            usePointStyle: true
+
+                        }
+
+                    }
+
+                }
 
             }
 
         }
-
-    }
-
-});
-
-
-// ==========================
-// Pie Chart
-// ==========================
-
-new Chart(document.getElementById("pieChart"), {
-
-    type: "pie",
-
-    data: {
-
-        labels: labels,
-
-        datasets: [{
-
-            data: votes,
-
-            backgroundColor: [
-
-                "#0d6efd",
-
-                "#198754",
-
-                "#ffc107",
-
-                "#dc3545",
-
-                "#6610f2",
-
-                "#20c997",
-
-                "#fd7e14",
-
-                "#6f42c1"
-
-            ]
-
-        }]
-
-    },
-
-    options: {
-
-        responsive: true,
-
-        maintainAspectRatio: false,
-
-        plugins: {
-
-            legend: {
-
-                position: "bottom"
-
-            }
-
-        }
-
-    }
-
-});
+    );
 
 </script>
 
-<!-- Auto Refresh -->
-
-<script>
-
-setInterval(function(){
-
-    location.reload();
-
-},5000);
-
-</script>
 
 </body>
 

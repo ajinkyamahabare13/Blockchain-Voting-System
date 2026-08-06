@@ -1,23 +1,48 @@
 from flask_sqlalchemy import SQLAlchemy
 
+
 db = SQLAlchemy()
 
 
 class User(db.Model):
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
 
-    full_name = db.Column(db.String(100), nullable=False)
+    full_name = db.Column(
+        db.String(100),
+        nullable=False
+    )
 
-    email = db.Column(db.String(100), unique=True, nullable=False)
+    email = db.Column(
+        db.String(100),
+        unique=True,
+        nullable=False
+    )
 
-    password = db.Column(db.String(255), nullable=False)
+    password = db.Column(
+        db.String(255),
+        nullable=False
+    )
 
-    wallet_address = db.Column(db.String(200), nullable=True)
+    wallet_address = db.Column(
+        db.String(200),
+        nullable=True
+    )
 
-    has_voted = db.Column(db.Boolean, default=False)
+    has_voted = db.Column(
+        db.Boolean,
+        default=False,
+        nullable=False
+    )
 
-    is_admin = db.Column(db.Boolean, default=False)
+    is_admin = db.Column(
+        db.Boolean,
+        default=False,
+        nullable=False
+    )
 
     def __repr__(self):
         return f"<User {self.full_name}>"
@@ -25,35 +50,74 @@ class User(db.Model):
 
 class Candidate(db.Model):
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
 
-    name = db.Column(db.String(100), nullable=False)
+    name = db.Column(
+        db.String(100),
+        nullable=False
+    )
 
-    party = db.Column(db.String(100), nullable=False)
+    party = db.Column(
+        db.String(100),
+        nullable=False
+    )
 
-    photo = db.Column(db.String(255))
+    photo = db.Column(
+        db.String(255),
+        nullable=True
+    )
 
-    votes = db.Column(db.Integer, default=0)
-    
+    votes = db.Column(
+        db.Integer,
+        default=0,
+        nullable=False
+    )
+
     def __repr__(self):
         return f"<Candidate {self.name}>"
 
+
 class Transaction(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
 
-    voter_name = db.Column(db.String(100))
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
 
-    candidate_name = db.Column(db.String(100))
+    voter_name = db.Column(
+        db.String(100),
+        nullable=False
+    )
 
-    tx_hash = db.Column(db.String(200))
+    candidate_name = db.Column(
+        db.String(100),
+        nullable=False
+    )
+
+    tx_hash = db.Column(
+        db.String(200),
+        nullable=False
+    )
 
     timestamp = db.Column(
         db.DateTime,
-        default=db.func.current_timestamp()
+        default=db.func.current_timestamp(),
+        nullable=False
     )
+
 
 class Election(db.Model):
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
 
-    is_active = db.Column(db.Boolean, default=False)
+    is_active = db.Column(
+        db.Boolean,
+        default=False,
+        nullable=False
+    )

@@ -1,5 +1,7 @@
 import json
+
 from web3 import Web3
+
 
 # ==========================
 # Connect to Ganache
@@ -11,34 +13,57 @@ web3 = Web3(Web3.HTTPProvider(ganache_url))
 
 print("Connected:", web3.is_connected())
 
+
 # ==========================
 # Load Smart Contract
 # ==========================
 
 with open("build/contracts/Voting.json") as f:
+
     contract_json = json.load(f)
+
 
 abi = contract_json["abi"]
 
-contract_address = "0x1892D7A90F3f89D00cD7303a51033821222ADa3F"
 
+contract_address = "0x71A768ab4deF9B60d52B6a314b9c71240C337654"
 contract = web3.eth.contract(
+
     address=contract_address,
+
     abi=abi
+
 )
 
-web3.eth.default_account = web3.eth.accounts[0]
-print("Default Account:", web3.eth.default_account)
+
+# ==========================
+# Ganache Accounts
+# ==========================
+
+ganache_accounts = web3.eth.accounts
+
+print("Ganache Accounts:")
+
+for index, account in enumerate(ganache_accounts):
+
+    print(index, account)
+
 
 # ==========================
 # Vote Function
 # ==========================
 
-def vote(candidate_id):
+def vote(candidate_id, voter_address):
 
-    tx_hash = contract.functions.vote(candidate_id).transact()
+    tx_hash = contract.functions.vote(
+        candidate_id
+    ).transact({
+        "from": voter_address
+    })
 
-    web3.eth.wait_for_transaction_receipt(tx_hash)
+    web3.eth.wait_for_transaction_receipt(
+        tx_hash
+    )
 
     return tx_hash.hex()
 
@@ -47,11 +72,67 @@ def vote(candidate_id):
 # ==========================
 
 def get_candidate(candidate_id):
-    return contract.functions.getCandidate(candidate_id).call()
+
+    return contract.functions.getCandidate(
+        candidate_id
+    ).call()
+
+# ==========================
+# Get Blockchain Vote Count
+# ==========================
+
+def get_blockchain_vote_count(candidate_id):
+
+    candidate = contract.functions.getCandidate(
+        candidate_id
+    ).call()
+
+    return candidate[3]
 
 # ==========================
 # Total Candidates
 # ==========================
 
 def get_candidate_count():
+
     return contract.functions.getCandidateCount().call()
+
+
+# ==========================
+# Reset Blockchain Election
+# ==========================
+
+def reset_election():
+
+    owner_account = web3.eth.accounts[0]
+
+    tx_hash = contract.functions.resetElection().transact({
+        "from": owner_account
+    })
+
+    web3.eth.wait_for_transaction_receipt(
+        tx_hash
+    )
+
+    return tx_hash.hex()
+
+# ==========================
+# Add Candidate
+# ==========================
+
+def add_candidate(name, party):
+
+    owner_account = web3.eth.accounts[0]
+
+    tx_hash = contract.functions.addCandidate(
+        name,
+        party
+    ).transact({
+        "from": owner_account
+    })
+
+    web3.eth.wait_for_transaction_receipt(
+        tx_hash
+    )
+
+    return tx_hash.hex()

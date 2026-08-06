@@ -5,131 +5,912 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    <title>User Registration</title>
+    <title>Create Account | Blockchain Voting System</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            font-family: "Segoe UI", sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(13, 110, 253, 0.18),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    rgba(102, 16, 242, 0.18),
+                    transparent 35%
+                ),
+                #f4f7fb;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 25px;
+        }
+
+        .register-wrapper {
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .register-card {
+            overflow: hidden;
+
+            border: none;
+            border-radius: 24px;
+
+            background: #ffffff;
+
+            box-shadow:
+                0 20px 60px rgba(15, 23, 42, 0.12);
+        }
+
+        /* ==========================
+           Branding
+        ========================== */
+
+        .brand-panel {
+            min-height: 680px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0d6efd,
+                    #6610f2
+                );
+
+            color: white;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            padding: 55px;
+        }
+
+        .brand-icon {
+            width: 82px;
+            height: 82px;
+
+            border-radius: 22px;
+
+            background: rgba(255, 255, 255, 0.16);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 38px;
+
+            margin-bottom: 30px;
+        }
+
+        .brand-panel h1 {
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1.15;
+
+            margin-bottom: 18px;
+        }
+
+        .brand-panel p {
+            font-size: 16px;
+            line-height: 1.7;
+
+            opacity: 0.92;
+
+            max-width: 430px;
+        }
+
+        .feature-list {
+            margin-top: 35px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+
+            gap: 13px;
+
+            margin-bottom: 17px;
+
+            font-size: 14px;
+        }
+
+        .feature-item i {
+            width: 32px;
+            height: 32px;
+
+            border-radius: 50%;
+
+            background: rgba(255, 255, 255, 0.15);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ==========================
+           Register Panel
+        ========================== */
+
+        .register-panel {
+            min-height: 680px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 50px;
+        }
+
+        .register-content {
+            width: 100%;
+            max-width: 450px;
+
+            margin: auto;
+        }
+
+        .register-heading {
+            margin-bottom: 28px;
+        }
+
+        .register-heading h2 {
+            font-size: 30px;
+
+            font-weight: 750;
+
+            color: #172033;
+
+            margin-bottom: 8px;
+        }
+
+        .register-heading p {
+            margin: 0;
+
+            color: #6c757d;
+
+            font-size: 14px;
+        }
+
+        /* ==========================
+           Alerts
+        ========================== */
+
+        .alert {
+            border: none;
+
+            border-radius: 12px;
+
+            font-size: 14px;
+        }
+
+        /* ==========================
+           Form
+        ========================== */
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-label {
+            font-size: 14px;
+
+            font-weight: 650;
+
+            color: #343a40;
+
+            margin-bottom: 7px;
+        }
+
+        .input-group-text {
+            width: 48px;
+
+            justify-content: center;
+
+            background: #f8f9fc;
+
+            border: 1px solid #dee2e6;
+
+            border-right: none;
+
+            color: #6c757d;
+        }
+
+        .form-control {
+            min-height: 49px;
+
+            border: 1px solid #dee2e6;
+
+            font-size: 14px;
+
+            box-shadow: none !important;
+        }
+
+        .form-control:focus {
+            border-color: #0d6efd;
+
+            box-shadow:
+                0 0 0 3px rgba(
+                    13,
+                    110,
+                    253,
+                    0.10
+                ) !important;
+        }
+
+        .password-toggle {
+            cursor: pointer;
+
+            background: white;
+
+            border-left: none;
+        }
+
+        /* ==========================
+           Wallet Info
+        ========================== */
+
+        .wallet-info {
+            display: flex;
+            align-items: flex-start;
+
+            gap: 9px;
+
+            padding: 12px 14px;
+
+            margin-top: -4px;
+            margin-bottom: 18px;
+
+            border-radius: 10px;
+
+            background: #f0f6ff;
+
+            color: #4b5563;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+        .wallet-info i {
+            color: #0d6efd;
+
+            margin-top: 2px;
+        }
+
+        /* ==========================
+           Password Hint
+        ========================== */
+
+        .password-hint {
+            margin-top: 6px;
+
+            font-size: 11px;
+
+            color: #6c757d;
+        }
+
+        /* ==========================
+           Register Button
+        ========================== */
+
+        .register-btn {
+            width: 100%;
+
+            min-height: 52px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0d6efd,
+                    #6610f2
+                );
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .register-btn:hover {
+            color: white;
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(13, 110, 253, 0.25);
+        }
+
+        /* ==========================
+           Login Link
+        ========================== */
+
+        .login-box {
+            text-align: center;
+
+            margin-top: 22px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #edf0f4;
+
+            font-size: 14px;
+
+            color: #6c757d;
+        }
+
+        .login-box a {
+            color: #0d6efd;
+
+            font-weight: 700;
+
+            text-decoration: none;
+        }
+
+        .login-box a:hover {
+            text-decoration: underline;
+        }
+
+        /* ==========================
+           Security
+        ========================== */
+
+        .security-note {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            margin-top: 17px;
+
+            color: #6c757d;
+
+            font-size: 12px;
+        }
+
+        .security-note i {
+            color: #198754;
+        }
+
+        /* ==========================
+           Responsive
+        ========================== */
+
+        @media (max-width: 767px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .brand-panel {
+                min-height: auto;
+
+                padding: 35px 30px;
+            }
+
+            .brand-panel h1 {
+                font-size: 30px;
+            }
+
+            .feature-list {
+                margin-top: 25px;
+            }
+
+            .register-panel {
+                min-height: auto;
+
+                padding: 35px 25px;
+            }
+
+            .register-heading h2 {
+                font-size: 26px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
-<body class="bg-light">
 
-<div class="container mt-3">
+<body>
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for category, message in messages %}
+<div class="register-wrapper">
 
-        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+    <div class="register-card">
 
-            {{ message }}
+        <div class="row g-0">
 
-            <button type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert">
-            </button>
+            <!-- ==========================
+                 Branding
+            ========================== -->
+
+            <div class="col-lg-6">
+
+                <div class="brand-panel">
+
+                    <div class="brand-icon">
+
+                        <i class="fa-solid fa-user-plus"></i>
+
+                    </div>
+
+                    <h1>
+                        Join the<br>
+                        Secure Election
+                    </h1>
+
+                    <p>
+                        Create your voter account and participate
+                        in a transparent blockchain-powered election.
+                    </p>
+
+                    <div class="feature-list">
+
+                        <div class="feature-item">
+
+                            <i class="fa-solid fa-user-shield"></i>
+
+                            <span>
+                                Secure account registration
+                            </span>
+
+                        </div>
+
+                        <div class="feature-item">
+
+                            <i class="fa-solid fa-wallet"></i>
+
+                            <span>
+                                Blockchain wallet verification
+                            </span>
+
+                        </div>
+
+                        <div class="feature-item">
+
+                            <i class="fa-solid fa-fingerprint"></i>
+
+                            <span>
+                                One verified voter identity
+                            </span>
+
+                        </div>
+
+                        <div class="feature-item">
+
+                            <i class="fa-solid fa-lock"></i>
+
+                            <span>
+                                Protected authentication
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==========================
+                 Registration
+            ========================== -->
+
+            <div class="col-lg-6">
+
+                <div class="register-panel">
+
+                    <div class="register-content">
+
+                        <div class="register-heading">
+
+                            <h2>
+                                Create Account
+                            </h2>
+
+                            <p>
+                                Register as a voter to continue.
+                            </p>
+
+                        </div>
+
+
+                        <!-- Flash Messages -->
+
+                        {% with messages = get_flashed_messages(
+                            with_categories=true
+                        ) %}
+
+                            {% if messages %}
+
+                                {% for category, message in messages %}
+
+                                    <div
+                                        class="alert alert-{{ category }} alert-dismissible fade show"
+                                        role="alert"
+                                    >
+
+                                        {% if category == "success" %}
+
+                                            <i
+                                                class="fa-solid fa-circle-check me-2"
+                                            ></i>
+
+                                        {% elif category == "danger" %}
+
+                                            <i
+                                                class="fa-solid fa-circle-exclamation me-2"
+                                            ></i>
+
+                                        {% elif category == "warning" %}
+
+                                            <i
+                                                class="fa-solid fa-triangle-exclamation me-2"
+                                            ></i>
+
+                                        {% else %}
+
+                                            <i
+                                                class="fa-solid fa-circle-info me-2"
+                                            ></i>
+
+                                        {% endif %}
+
+                                        {{ message }}
+
+                                        <button
+                                            type="button"
+                                            class="btn-close"
+                                            data-bs-dismiss="alert"
+                                        ></button>
+
+                                    </div>
+
+                                {% endfor %}
+
+                            {% endif %}
+
+                        {% endwith %}
+
+
+                        <!-- Registration Form -->
+
+                        <form
+                            method="POST"
+                            action="{{ url_for('register') }}"
+                        >
+
+                            <!-- CSRF -->
+
+                            <input
+                                type="hidden"
+                                name="csrf_token"
+                                value="{{ csrf_token() }}"
+                            >
+
+
+                            <!-- Full Name -->
+
+                            <div class="form-group">
+
+                                <label
+                                    for="full_name"
+                                    class="form-label"
+                                >
+                                    Full Name
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+
+                                        <i
+                                            class="fa-solid fa-user"
+                                        ></i>
+
+                                    </span>
+
+                                    <input
+                                        type="text"
+                                        id="full_name"
+                                        name="full_name"
+                                        class="form-control"
+                                        placeholder="Enter your full name"
+                                        autocomplete="name"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Email -->
+
+                            <div class="form-group">
+
+                                <label
+                                    for="email"
+                                    class="form-label"
+                                >
+                                    Email Address
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+
+                                        <i
+                                            class="fa-solid fa-envelope"
+                                        ></i>
+
+                                    </span>
+
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        class="form-control"
+                                        placeholder="Enter your email"
+                                        autocomplete="email"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Wallet -->
+
+                            <div class="form-group">
+
+                                <label
+                                    for="wallet_address"
+                                    class="form-label"
+                                >
+                                    Blockchain Wallet Address
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+
+                                        <i
+                                            class="fa-solid fa-wallet"
+                                        ></i>
+
+                                    </span>
+
+                                    <input
+                                        type="text"
+                                        id="wallet_address"
+                                        name="wallet_address"
+                                        class="form-control"
+                                        placeholder="Enter Ganache wallet address"
+                                        autocomplete="off"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="wallet-info">
+
+                                <i
+                                    class="fa-solid fa-circle-info"
+                                ></i>
+
+                                <span>
+                                    Use an available Ganache wallet address
+                                    registered on the blockchain network.
+                                </span>
+
+                            </div>
+
+
+                            <!-- Password -->
+
+                            <div class="form-group">
+
+                                <label
+                                    for="password"
+                                    class="form-label"
+                                >
+                                    Password
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+
+                                        <i
+                                            class="fa-solid fa-lock"
+                                        ></i>
+
+                                    </span>
+
+                                    <input
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        class="form-control"
+                                        placeholder="Create a password"
+                                        autocomplete="new-password"
+                                        minlength="8"
+                                        required
+                                    >
+
+                                    <button
+                                        type="button"
+                                        class="input-group-text password-toggle"
+                                        onclick="togglePassword()"
+                                        aria-label="Show or hide password"
+                                    >
+
+                                        <i
+                                            id="passwordIcon"
+                                            class="fa-solid fa-eye"
+                                        ></i>
+
+                                    </button>
+
+                                </div>
+
+                                <div class="password-hint">
+                                    Minimum 8 characters.
+                                </div>
+
+                            </div>
+
+
+                            <!-- Submit -->
+
+                            <button
+                                type="submit"
+                                class="register-btn"
+                            >
+
+                                <i
+                                    class="fa-solid fa-user-plus me-2"
+                                ></i>
+
+                                Create Secure Account
+
+                            </button>
+
+                        </form>
+
+
+                        <!-- Login -->
+
+                        <div class="login-box">
+
+                            Already have an account?
+
+                            <a
+                                href="{{ url_for('login') }}"
+                            >
+                                Login Here
+                            </a>
+
+                        </div>
+
+
+                        <!-- Security -->
+
+                        <div class="security-note">
+
+                            <i
+                                class="fa-solid fa-shield-halved"
+                            ></i>
+
+                            Your account is protected with secure authentication
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
-
-        {% endfor %}
-    {% endif %}
-{% endwith %}
-
-</div>
-
-<div class="container mt-5">
-
-    <div class="card shadow p-4">
-
-        <h2 class="text-center mb-4">
-            User Registration
-        </h2>
-
-        <form method="POST" action="/register">
-
-            <div class="mb-3">
-
-                <label class="form-label">
-                    Full Name
-                </label>
-
-                <input
-                    type="text"
-                    name="full_name"
-                    class="form-control"
-                    required>
-
-            </div>
-
-            <div class="mb-3">
-
-                <label class="form-label">
-                    Email
-                </label>
-
-                <input
-                    type="email"
-                    name="email"
-                    class="form-control"
-                    required>
-
-            </div>
-
-            <div class="mb-3">
-
-                <label class="form-label">
-                    Password
-                </label>
-
-                <input
-                    type="password"
-                    name="password"
-                    class="form-control"
-                    required>
-
-            </div>
-
-            <div class="mb-3">
-
-                <label class="form-label">
-                    Wallet Address
-                </label>
-
-                <input
-                    type="text"
-                    name="wallet_address"
-                    class="form-control">
-
-            </div>
-
-            <button
-                type="submit"
-                class="btn btn-success w-100">
-
-                Register
-
-            </button>
-
-        </form>
-
-        <hr>
-
-        <p class="text-center">
-
-            Already have an account?
-
-            <a href="/login">
-                Login Here
-            </a>
-
-        </p>
 
     </div>
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Bootstrap JS -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+></script>
+
+
+<script>
+
+    function togglePassword() {
+
+        const password =
+            document.getElementById("password");
+
+        const icon =
+            document.getElementById("passwordIcon");
+
+        if (password.type === "password") {
+
+            password.type = "text";
+
+            icon.classList.remove(
+                "fa-eye"
+            );
+
+            icon.classList.add(
+                "fa-eye-slash"
+            );
+
+        } else {
+
+            password.type = "password";
+
+            icon.classList.remove(
+                "fa-eye-slash"
+            );
+
+            icon.classList.add(
+                "fa-eye"
+            );
+
+        }
+
+    }
+
+</script>
 
 </body>
 

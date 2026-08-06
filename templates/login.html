@@ -5,103 +5,646 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    <title>User Login</title>
+    <title>Login | Blockchain Voting System</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Segoe UI", sans-serif;
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(13, 110, 253, 0.18),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    rgba(102, 16, 242, 0.18),
+                    transparent 35%
+                ),
+                #f4f7fb;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+        }
+
+        .login-wrapper {
+            width: 100%;
+            max-width: 1050px;
+        }
+
+        .login-card {
+            overflow: hidden;
+            border: none;
+            border-radius: 24px;
+            background: #ffffff;
+            box-shadow:
+                0 20px 60px rgba(15, 23, 42, 0.12);
+        }
+
+        /* ==========================
+           Left Branding Section
+        ========================== */
+
+        .brand-panel {
+            min-height: 600px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0d6efd,
+                    #6610f2
+                );
+
+            color: white;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            padding: 55px;
+        }
+
+        .brand-icon {
+            width: 82px;
+            height: 82px;
+
+            border-radius: 22px;
+
+            background: rgba(255, 255, 255, 0.16);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 38px;
+
+            margin-bottom: 30px;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .brand-panel h1 {
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 18px;
+        }
+
+        .brand-panel p {
+            font-size: 16px;
+            line-height: 1.7;
+            opacity: 0.92;
+            max-width: 430px;
+        }
+
+        .feature-list {
+            margin-top: 35px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+
+            margin-bottom: 17px;
+
+            font-size: 14px;
+        }
+
+        .feature-item i {
+            width: 32px;
+            height: 32px;
+
+            border-radius: 50%;
+
+            background: rgba(255, 255, 255, 0.15);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ==========================
+           Login Section
+        ========================== */
+
+        .login-panel {
+            min-height: 600px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 55px;
+        }
+
+        .login-content {
+            width: 100%;
+            max-width: 430px;
+            margin: auto;
+        }
+
+        .login-heading {
+            margin-bottom: 35px;
+        }
+
+        .login-heading h2 {
+            font-size: 30px;
+            font-weight: 750;
+            color: #172033;
+            margin-bottom: 8px;
+        }
+
+        .login-heading p {
+            color: #6c757d;
+            margin: 0;
+            font-size: 14px;
+        }
+
+        /* ==========================
+           Alerts
+        ========================== */
+
+        .alert {
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+        }
+
+        /* ==========================
+           Form
+        ========================== */
+
+        .form-group {
+            margin-bottom: 21px;
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 650;
+            color: #343a40;
+            margin-bottom: 8px;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group-text {
+            width: 48px;
+
+            justify-content: center;
+
+            background: #f8f9fc;
+
+            border: 1px solid #dee2e6;
+            border-right: none;
+
+            color: #6c757d;
+        }
+
+        .form-control {
+            min-height: 50px;
+
+            border: 1px solid #dee2e6;
+
+            font-size: 14px;
+
+            box-shadow: none !important;
+        }
+
+        .form-control:focus {
+            border-color: #0d6efd;
+
+            box-shadow:
+                0 0 0 3px rgba(13, 110, 253, 0.10) !important;
+        }
+
+        .password-toggle {
+            cursor: pointer;
+            background: white;
+            border-left: none;
+        }
+
+        /* ==========================
+           Login Button
+        ========================== */
+
+        .login-btn {
+            width: 100%;
+
+            min-height: 52px;
+
+            border: none;
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0d6efd,
+                    #6610f2
+                );
+
+            color: white;
+
+            font-size: 15px;
+            font-weight: 700;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .login-btn:hover {
+            color: white;
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 25px rgba(13, 110, 253, 0.25);
+        }
+
+        /* ==========================
+           Register
+        ========================== */
+
+        .register-box {
+            text-align: center;
+
+            margin-top: 25px;
+            padding-top: 23px;
+
+            border-top: 1px solid #edf0f4;
+
+            font-size: 14px;
+
+            color: #6c757d;
+        }
+
+        .register-box a {
+            color: #0d6efd;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .register-box a:hover {
+            text-decoration: underline;
+        }
+
+        /* ==========================
+           Security Note
+        ========================== */
+
+        .security-note {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            margin-top: 20px;
+
+            color: #6c757d;
+
+            font-size: 12px;
+        }
+
+        .security-note i {
+            color: #198754;
+        }
+
+        /* ==========================
+           Responsive
+        ========================== */
+
+        @media (max-width: 767px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .brand-panel {
+                min-height: auto;
+                padding: 35px 30px;
+            }
+
+            .brand-panel h1 {
+                font-size: 30px;
+            }
+
+            .feature-list {
+                margin-top: 25px;
+            }
+
+            .login-panel {
+                min-height: auto;
+                padding: 35px 25px;
+            }
+
+            .login-heading h2 {
+                font-size: 26px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
-<body class="bg-light">
 
-<div class="container mt-3">
+<body>
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for category, message in messages %}
+<div class="login-wrapper">
 
-        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+    <div class="login-card">
 
-            {{ message }}
+        <div class="row g-0">
 
-            <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="alert">
-            </button>
+            <!-- ==========================
+                 Branding
+            ========================== -->
 
-        </div>
+            <div class="col-lg-6">
 
-        {% endfor %}
-    {% endif %}
-{% endwith %}
+                <div class="brand-panel">
 
-</div>
+                    <div class="brand-icon">
+                        <i class="fa-solid fa-cube"></i>
+                    </div>
 
-<div class="container mt-5">
+                    <h1>
+                        Blockchain<br>
+                        Voting System
+                    </h1>
 
-    <div class="row justify-content-center">
+                    <p>
+                        A secure and transparent digital voting
+                        platform powered by blockchain technology.
+                    </p>
 
-        <div class="col-md-6">
+                    <div class="feature-list">
 
-            <div class="card shadow p-4">
+                        <div class="feature-item">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <span>
+                                Secure voter authentication
+                            </span>
+                        </div>
 
-                <h2 class="text-center mb-4">
-                    User Login
-                </h2>
+                        <div class="feature-item">
+                            <i class="fa-solid fa-link"></i>
+                            <span>
+                                Blockchain-backed voting
+                            </span>
+                        </div>
 
-                <form method="POST" action="/login">
+                        <div class="feature-item">
+                            <i class="fa-solid fa-check-double"></i>
+                            <span>
+                                One person, one vote
+                            </span>
+                        </div>
 
-                    <div class="mb-3">
-
-                        <label class="form-label">
-                            Email
-                        </label>
-
-                        <input
-                            type="email"
-                            name="email"
-                            class="form-control"
-                            required>
+                        <div class="feature-item">
+                            <i class="fa-solid fa-chart-column"></i>
+                            <span>
+                                Transparent election results
+                            </span>
+                        </div>
 
                     </div>
 
-                    <div class="mb-3">
+                </div>
 
-                        <label class="form-label">
-                            Password
-                        </label>
+            </div>
 
-                        <input
-                            type="password"
-                            name="password"
-                            class="form-control"
-                            required>
+
+            <!-- ==========================
+                 Login Form
+            ========================== -->
+
+            <div class="col-lg-6">
+
+                <div class="login-panel">
+
+                    <div class="login-content">
+
+                        <div class="login-heading">
+
+                            <h2>
+                                Welcome Back
+                            </h2>
+
+                            <p>
+                                Login to access your voting dashboard.
+                            </p>
+
+                        </div>
+
+
+                        <!-- Flash Messages -->
+
+                        {% with messages = get_flashed_messages(
+                            with_categories=true
+                        ) %}
+
+                            {% if messages %}
+
+                                {% for category, message in messages %}
+
+                                    <div
+                                        class="alert alert-{{ category }} alert-dismissible fade show"
+                                        role="alert"
+                                    >
+
+                                        {% if category == "success" %}
+                                            <i class="fa-solid fa-circle-check me-2"></i>
+
+                                        {% elif category == "danger" %}
+                                            <i class="fa-solid fa-circle-exclamation me-2"></i>
+
+                                        {% elif category == "warning" %}
+                                            <i class="fa-solid fa-triangle-exclamation me-2"></i>
+
+                                        {% else %}
+                                            <i class="fa-solid fa-circle-info me-2"></i>
+                                        {% endif %}
+
+                                        {{ message }}
+
+                                        <button
+                                            type="button"
+                                            class="btn-close"
+                                            data-bs-dismiss="alert"
+                                        ></button>
+
+                                    </div>
+
+                                {% endfor %}
+
+                            {% endif %}
+
+                        {% endwith %}
+
+
+                        <!-- Login Form -->
+
+                        <form
+                            method="POST"
+                            action="{{ url_for('login') }}"
+                        >
+
+                            <!-- CSRF -->
+
+                            <input
+                                type="hidden"
+                                name="csrf_token"
+                                value="{{ csrf_token() }}"
+                            >
+
+
+                            <!-- Email -->
+
+                            <div class="form-group">
+
+                                <label
+                                    for="email"
+                                    class="form-label"
+                                >
+                                    Email Address
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        <i class="fa-solid fa-envelope"></i>
+                                    </span>
+
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        class="form-control"
+                                        placeholder="Enter your email"
+                                        autocomplete="email"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Password -->
+
+                            <div class="form-group">
+
+                                <label
+                                    for="password"
+                                    class="form-label"
+                                >
+                                    Password
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        <i class="fa-solid fa-lock"></i>
+                                    </span>
+
+                                    <input
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        class="form-control"
+                                        placeholder="Enter your password"
+                                        autocomplete="current-password"
+                                        required
+                                    >
+
+                                    <button
+                                        type="button"
+                                        class="input-group-text password-toggle"
+                                        onclick="togglePassword()"
+                                        aria-label="Show or hide password"
+                                    >
+                                        <i
+                                            id="passwordIcon"
+                                            class="fa-solid fa-eye"
+                                        ></i>
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Submit -->
+
+                            <button
+                                type="submit"
+                                class="login-btn"
+                            >
+
+                                <i class="fa-solid fa-right-to-bracket me-2"></i>
+
+                                Login Securely
+
+                            </button>
+
+                        </form>
+
+
+                        <!-- Register -->
+
+                        <div class="register-box">
+
+                            Don't have an account?
+
+                            <a href="{{ url_for('register') }}">
+                                Create Account
+                            </a>
+
+                        </div>
+
+
+                        <!-- Security -->
+
+                        <div class="security-note">
+
+                            <i class="fa-solid fa-shield-halved"></i>
+
+                            Protected with secure authentication
+
+                        </div>
 
                     </div>
 
-                    <button
-                        type="submit"
-                        class="btn btn-primary w-100">
-
-                        Login
-
-                    </button>
-
-                </form>
-
-                <hr>
-
-                <p class="text-center">
-
-                    Don't have an account?
-
-                    <a href="/register">
-                        Register Here
-                    </a>
-
-                </p>
+                </div>
 
             </div>
 
@@ -111,7 +654,53 @@
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Bootstrap JS -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+></script>
+
+
+<script>
+
+    function togglePassword() {
+
+        const password =
+            document.getElementById("password");
+
+        const icon =
+            document.getElementById("passwordIcon");
+
+        if (password.type === "password") {
+
+            password.type = "text";
+
+            icon.classList.remove(
+                "fa-eye"
+            );
+
+            icon.classList.add(
+                "fa-eye-slash"
+            );
+
+        } else {
+
+            password.type = "password";
+
+            icon.classList.remove(
+                "fa-eye-slash"
+            );
+
+            icon.classList.add(
+                "fa-eye"
+            );
+
+        }
+
+    }
+
+</script>
 
 </body>
 

@@ -3,930 +3,2289 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
 
-<title>Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Admin Dashboard | Blockchain Voting System</title>
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    >
 
-<style>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f4f7fb;
+            font-family: "Segoe UI", sans-serif;
+            color: #1f2937;
+        }
+
+        /* =========================
+           Navbar
+        ========================= */
+
+        .navbar-custom {
+            background: linear-gradient(
+                135deg,
+                #0d6efd,
+                #6610f2
+            );
+
+            padding: 15px 0;
+
+            box-shadow:
+                0 8px 25px rgba(13, 110, 253, 0.20);
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 700;
+            font-size: 21px;
+        }
+
+        .admin-badge {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            padding: 7px 14px;
+            border-radius: 30px;
+            font-size: 13px;
+        }
+
+        /* =========================
+           Main Container
+        ========================= */
+
+        .main-container {
+            max-width: 1400px;
+            margin: auto;
+            padding: 30px 18px 60px;
+        }
+
+        /* =========================
+           Alerts
+        ========================= */
+
+        .alert {
+            border: none;
+            border-radius: 14px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.05);
+        }
+
+        /* =========================
+           Hero
+        ========================= */
+
+        .hero {
+            background:
+                linear-gradient(
+                    135deg,
+                    #0d6efd,
+                    #6610f2
+                );
+
+            color: white;
+
+            border-radius: 24px;
+
+            padding: 35px;
+
+            margin-bottom: 28px;
+
+            box-shadow:
+                0 15px 35px rgba(13, 110, 253, 0.20);
+        }
+
+        .hero h1 {
+            font-size: 32px;
+            font-weight: 750;
+            margin-bottom: 8px;
+        }
+
+        .hero p {
+            margin-bottom: 0;
+            opacity: 0.90;
+        }
+
+        .security-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            background: rgba(255,255,255,0.14);
+
+            border: 1px solid rgba(255,255,255,0.20);
+
+            padding: 8px 14px;
+
+            border-radius: 30px;
+
+            font-size: 13px;
+
+            margin-top: 18px;
+        }
+
+        /* =========================
+           Election Status
+        ========================= */
+
+        .status-card {
+            background: white;
+
+            border-radius: 20px;
+
+            padding: 22px;
+
+            margin-bottom: 30px;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.06);
+
+            border-left: 5px solid #198754;
+        }
+
+        .status-card.closed {
+            border-left-color: #ffc107;
+        }
+
+        .status-title {
+            font-size: 14px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            font-weight: 700;
+        }
+
+        .status-running {
+            color: #198754;
+            font-size: 22px;
+            font-weight: 750;
+        }
+
+        .status-closed {
+            color: #d97706;
+            font-size: 22px;
+            font-weight: 750;
+        }
+
+        /* =========================
+           Statistics
+        ========================= */
+
+        .stat-card {
+            background: white;
+
+            border: none;
+
+            border-radius: 20px;
+
+            padding: 24px;
+
+            height: 100%;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.06);
+
+            transition: 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 15px 32px rgba(0,0,0,0.10);
+        }
+
+        .stat-icon {
+            width: 52px;
+            height: 52px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 15px;
+
+            font-size: 21px;
+
+            margin-bottom: 15px;
+        }
+
+        .blue-icon {
+            background: #e8f1ff;
+            color: #0d6efd;
+        }
+
+        .green-icon {
+            background: #e8f8ef;
+            color: #198754;
+        }
+
+        .yellow-icon {
+            background: #fff7df;
+            color: #d99a00;
+        }
+
+        .purple-icon {
+            background: #f0eaff;
+            color: #6610f2;
+        }
+
+        .red-icon {
+            background: #ffe9ec;
+            color: #dc3545;
+        }
+
+        .info-icon {
+            background: #e5f7fb;
+            color: #0dcaf0;
+        }
+
+        .stat-number {
+            font-size: 30px;
+            font-weight: 750;
+            color: #111827;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 14px;
+            margin-top: 3px;
+        }
+
+        /* =========================
+           Section
+        ========================= */
+
+        .section-card {
+            background: white;
+
+            border-radius: 22px;
+
+            padding: 26px;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.06);
+
+            margin-top: 30px;
+        }
+
+        .section-heading {
+            font-size: 21px;
+            font-weight: 750;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            margin-bottom: 22px;
+        }
+
+        .section-heading i {
+            color: #0d6efd;
+        }
+
+        /* =========================
+           Charts
+        ========================= */
+
+        .chart-container {
+            position: relative;
+            height: 330px;
+        }
+
+        /* =========================
+           Add Candidate
+        ========================= */
+
+        .form-control,
+        .form-select {
+            border-radius: 12px;
+
+            padding: 12px 14px;
+
+            border: 1px solid #dce3ec;
+
+            box-shadow: none;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #0d6efd;
+
+            box-shadow:
+                0 0 0 3px rgba(13,110,253,0.10);
+        }
+
+        .form-label {
+            font-size: 13px;
+            font-weight: 650;
+            color: #4b5563;
+            margin-bottom: 7px;
+        }
+
+        /* =========================
+           Buttons
+        ========================= */
+
+        .btn {
+            border-radius: 12px;
+            font-weight: 600;
+            padding: 10px 17px;
+        }
+
+        .btn-primary {
+            box-shadow:
+                0 5px 14px rgba(13,110,253,0.18);
+        }
+
+        .btn-success {
+            box-shadow:
+                0 5px 14px rgba(25,135,84,0.15);
+        }
+
+        .btn-danger {
+            box-shadow:
+                0 5px 14px rgba(220,53,69,0.15);
+        }
+
+        /* =========================
+           Candidate Table
+        ========================= */
+
+        .search-box {
+            max-width: 300px;
+        }
+
+        .candidate-table {
+            margin-bottom: 0;
+        }
+
+        .candidate-table thead th {
+            background: #111827;
+            color: white;
+
+            font-size: 13px;
+
+            padding: 14px 10px;
+
+            white-space: nowrap;
+        }
+
+        .candidate-table tbody td {
+            padding: 13px 10px;
+            vertical-align: middle;
+        }
+
+        .candidate-table tbody tr {
+            transition: 0.2s ease;
+        }
+
+        .candidate-table tbody tr:hover {
+            background: #f7faff;
+        }
+
+        .candidate-photo {
+            width: 58px;
+            height: 58px;
+
+            object-fit: cover;
+
+            border-radius: 50%;
+
+            border: 3px solid #e7efff;
+        }
+
+        .candidate-name {
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .party-name {
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .vote-count {
+            font-weight: 750;
+            font-size: 17px;
+        }
+
+        .progress {
+            height: 20px;
+
+            border-radius: 30px;
+
+            background: #edf1f6;
+        }
+
+        .progress-bar {
+            border-radius: 30px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+        /* =========================
+           Action Area
+        ========================= */
+
+        .action-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        /* =========================
+        Reports & Tools
+        ========================= */
+
+    .report-card {
+    background: #ffffff;
+    border: 1px solid #e8edf4;
+    border-radius: 20px;
+    padding: 22px;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: 0.3s ease;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.04);
 }
 
-body{
-
-    background:#eef3f9;
-    font-family:'Segoe UI',sans-serif;
-
+.report-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 30px rgba(0,0,0,0.09);
 }
 
-.header{
+.report-icon {
+    min-width: 52px;
+    width: 52px;
+    height: 52px;
+    border-radius: 15px;
 
-    background:linear-gradient(135deg,#0d6efd,#6610f2);
-    color:white;
-    border-radius:22px;
-    padding:35px;
-    margin-bottom:35px;
-    box-shadow:0 15px 30px rgba(0,0,0,.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
+    font-size: 21px;
 }
 
-.header h2{
-
-    font-weight:700;
-
+.transaction-icon {
+    background: #eef1f5;
+    color: #212529;
 }
 
-.card{
-
-    border:none;
-    border-radius:20px;
-    transition:.35s;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
-
+.pdf-icon {
+    background: #ffe9ec;
+    color: #dc3545;
 }
 
-.card:hover{
-
-    transform:translateY(-7px);
-
+.excel-icon {
+    background: #e8f8ef;
+    color: #198754;
 }
 
-.icon{
-
-    font-size:45px;
-
+.download-icon {
+    background: #e8f1ff;
+    color: #0d6efd;
 }
 
-.stat{
-
-    font-size:34px;
-    font-weight:bold;
-    margin-top:10px;
-
+.reset-icon {
+    background: #fff0f1;
+    color: #dc3545;
 }
 
-.analytics-title{
-
-    font-weight:600;
-    color:#555;
-
+.dashboard-icon {
+    background: #f0eaff;
+    color: #6610f2;
 }
 
-.btn{
-
-    border-radius:30px;
-
+.report-content {
+    flex: 1;
 }
 
-.table{
-
-    background:white;
-
+.report-content h5 {
+    font-size: 17px;
+    font-weight: 750;
+    color: #111827;
+    margin-bottom: 7px;
 }
 
-.table th{
-
-    vertical-align:middle;
-
+.report-content p {
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 15px;
 }
 
-.progress{
-
-    height:22px;
-    border-radius:20px;
-
+.report-content .btn {
+    font-size: 13px;
+    padding: 9px 13px;
 }
 
-.progress-bar{
+.report-info-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
 
-    font-weight:bold;
+    background: linear-gradient(
+        135deg,
+        #f8fbff,
+        #eef5ff
+    );
 
+    border: 1px solid #dceaff;
+    border-radius: 17px;
+    padding: 17px 19px;
 }
 
-</style>
+.report-info-icon {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+
+    border-radius: 11px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #e8f1ff;
+    color: #0d6efd;
+}
+
+.report-info-box strong {
+    color: #1f2937;
+    font-size: 14px;
+}
+
+.report-info-box p {
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-top: 4px;
+}
+
+        /* =========================
+           Security Box
+        ========================= */
+
+        .security-box {
+            background: linear-gradient(
+                135deg,
+                #f8fbff,
+                #eef5ff
+            );
+
+            border: 1px solid #dceaff;
+
+            border-radius: 18px;
+
+            padding: 20px;
+
+            margin-top: 30px;
+        }
+
+        .security-box h5 {
+            font-weight: 750;
+            margin-bottom: 15px;
+        }
+
+        .security-item {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            font-size: 14px;
+
+            color: #4b5563;
+
+            margin-bottom: 8px;
+        }
+
+        .security-item i {
+            color: #198754;
+        }
+
+        /* =========================
+           Footer
+        ========================= */
+
+        footer {
+            text-align: center;
+
+            color: #8a94a6;
+
+            font-size: 13px;
+
+            margin-top: 35px;
+        }
+
+        /* =========================
+           Responsive
+        ========================= */
+
+        @media (max-width: 768px) {
+
+            .hero {
+                padding: 25px 20px;
+            }
+
+            .hero h1 {
+                font-size: 25px;
+            }
+
+            .section-card {
+                padding: 18px;
+            }
+
+            .search-box {
+                max-width: 100%;
+                width: 100%;
+                margin-top: 12px;
+            }
+
+            .candidate-header {
+                flex-direction: column;
+                align-items: stretch !important;
+            }
+
+            .chart-container {
+                height: 270px;
+            }
+
+            .action-grid .btn {
+                width: 100%;
+            }
+            
+            .report-card {
+                padding: 18px;
+            }
+
+            .report-content h5 {
+                font-size: 16px;
+            }
+
+            .report-content .btn {
+                width: 100%;
+            }
+
+            .report-info-box {
+                flex-direction: column;
+            }
+        }
+        /* =========================================
+   13.9 RESPONSIVE / MOBILE POLISH
+   ========================================= */
+
+@media (max-width: 768px) {
+
+    body {
+        overflow-x: hidden;
+    }
+
+    .navbar {
+        padding: 10px 0;
+    }
+
+    .brand {
+        font-size: 16px;
+    }
+
+    .brand-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 9px;
+        margin-right: 8px;
+    }
+
+    .brand-icon i {
+        font-size: 15px;
+    }
+
+    .admin-header {
+        padding: 30px 18px !important;
+    }
+
+    .admin-header h1 {
+        font-size: 27px;
+        line-height: 1.25;
+    }
+
+    .admin-header p {
+        font-size: 14px;
+        line-height: 1.55;
+    }
+
+    .stat-card {
+        margin-bottom: 15px;
+    }
+
+    .control-card {
+        padding: 18px;
+        border-radius: 16px;
+    }
+
+    .table-card {
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+    .candidate-table {
+        min-width: 700px;
+    }
+
+    .table-responsive {
+        border-radius: 14px;
+        overflow-x: auto;
+    }
+
+    .admin-action-btn {
+        width: 100%;
+        min-height: 44px;
+        margin-bottom: 8px;
+    }
+
+    .section-title {
+        font-size: 21px;
+    }
+
+    canvas {
+        max-width: 100%;
+    }
+
+}
+    </style>
 
 </head>
 
+
 <body>
 
-<div class="container mt-4">
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-{% if messages %}
-{% for category,message in messages %}
+<!-- =========================
+     Navbar
+========================= -->
 
-<div class="alert alert-{{category}} alert-dismissible fade show">
+<nav class="navbar navbar-custom">
 
-{{message}}
+    <div class="container">
 
-<button
-class="btn-close"
-data-bs-dismiss="alert">
-</button>
+        <a
+            class="navbar-brand"
+            href="/admin"
+        >
 
-</div>
+            <i class="fa-solid fa-shield-halved me-2"></i>
 
-{% endfor %}
-{% endif %}
-{% endwith %}
+            Blockchain Voting System
 
-<div class="header text-center">
+        </a>
 
-    <h2>
-        <i class="fa-solid fa-user-shield"></i>
-        Admin Dashboard
-    </h2>
 
-    <p>
-        Blockchain Based Voting System
-    </p>
+        <span class="admin-badge">
 
-    <hr class="bg-light">
+            <i class="fa-solid fa-user-shield me-1"></i>
+
+            Administrator
+
+        </span>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =========================
+     Main
+========================= -->
+
+<div class="main-container">
+
+
+    <!-- =========================
+         Flash Messages
+    ========================= -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div
+                    class="alert alert-{{ category }} alert-dismissible fade show"
+                    role="alert"
+                >
+
+                    <i class="fa-solid fa-circle-info me-2"></i>
+
+                    {{ message }}
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                    ></button>
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+
+    <!-- =========================
+         Hero
+    ========================= -->
+
+    <div class="hero">
+
+        <h1>
+
+            <i class="fa-solid fa-user-shield me-2"></i>
+
+            Admin Dashboard
+
+        </h1>
+
+        <p>
+
+            Manage your blockchain-based election securely and efficiently.
+
+        </p>
+
+        <div class="security-pill">
+
+            <i class="fa-solid fa-lock"></i>
+
+            Secure Administrator Control Panel
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         Election Status
+    ========================= -->
 
     {% if election.is_active %}
 
-        <div class="alert alert-success mt-3">
+        <div class="status-card">
 
-            <h5>
+            <div class="row align-items-center">
 
-                🟢 Election Status : RUNNING
+                <div class="col-md-8">
 
-            </h5>
+                    <div class="status-title">
+                        Election Status
+                    </div>
 
-            <a
-            href="/stop_election"
-            class="btn btn-danger mt-2">
+                    <div class="status-running mt-1">
 
-                <i class="fa-solid fa-stop"></i>
+                        <i class="fa-solid fa-circle me-2"
+                           style="font-size:10px;"></i>
 
-                Stop Election
+                        Election is currently RUNNING
 
-            </a>
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+
+                    <form
+    method="POST"
+    action="{{ url_for('stop_election') }}"
+    class="d-inline"
+>
+
+                <input
+                 type="hidden"
+                 name="csrf_token"
+                 value="{{ csrf_token() }}"
+                 >
+
+                <button
+                type="submit"
+                class="btn btn-danger"
+                onclick="return confirm(
+            'Are you sure you want to stop the election?'
+        );"
+    >
+
+        <i class="fa-solid fa-stop me-2"></i>
+
+        Stop Election
+
+    </button>
+
+</form>
+
+                </div>
+
+            </div>
 
         </div>
 
     {% else %}
 
-        <div class="alert alert-warning mt-3">
+        <div class="status-card closed">
 
-            <h5>
+            <div class="row align-items-center">
 
-                🔴 Election Status : CLOSED
+                <div class="col-md-8">
 
-            </h5>
+                    <div class="status-title">
+                        Election Status
+                    </div>
 
-            <a
-            href="/start_election"
-            class="btn btn-success mt-2">
+                    <div class="status-closed mt-1">
 
-                <i class="fa-solid fa-play"></i>
+                        <i class="fa-solid fa-circle me-2"
+                           style="font-size:10px;"></i>
 
-                Start Election
+                        Election is currently CLOSED
 
-            </a>
+                    </div>
+
+                </div>
+                <i class="fa-solid fa-play me-2"></i>
+
+
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+
+                    <form
+                    method="POST"
+                    action="{{ url_for('start_election') }}"
+                    class="d-inline"
+                    >
+
+                    <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token() }}"
+                    >
+
+                    <button
+                    type="submit"
+                    class="btn btn-success"
+                    onclick="return confirm(
+                    'Are you sure you want to start the election?'
+                     );"
+                    >
+
+        <i class="fa-solid fa-play me-2"></i>
+
+        Start Election
+
+    </button>
+
+</form>
+
+                </div>
+
+            </div>
 
         </div>
 
     {% endif %}
 
-</div>
 
-<!-- ========================= -->
-<!-- Top Statistics -->
-<!-- ========================= -->
 
-<div class="row g-4">
+    <!-- =========================
+         Statistics
+    ========================= -->
 
-<div class="col-lg-3">
+    <div class="row g-4">
 
-<div class="card text-center p-4">
 
-<div class="icon text-primary">
-<i class="fa-solid fa-users"></i>
-</div>
+        <!-- Registered Users -->
 
-<div class="stat">
-{{ total_users }}
-</div>
+        <div class="col-xl-3 col-md-6">
 
-<div class="analytics-title">
+            <div class="stat-card">
 
-Registered Users
+                <div class="stat-icon blue-icon">
 
-</div>
+                    <i class="fa-solid fa-users"></i>
 
-</div>
+                </div>
 
-</div>
+                <div class="stat-number">
 
-<div class="col-lg-3">
+                    {{ total_users }}
 
-<div class="card text-center p-4">
+                </div>
 
-<div class="icon text-success">
-<i class="fa-solid fa-user-check"></i>
-</div>
+                <div class="stat-label">
 
-<div class="stat">
-{{ total_candidates }}
-</div>
+                    Registered Users
 
-<div class="analytics-title">
+                </div>
 
-Candidates
+            </div>
 
-</div>
+        </div>
 
-</div>
 
-</div>
 
-<div class="col-lg-3">
+        <!-- Candidates -->
 
-<div class="card text-center p-4">
+        <div class="col-xl-3 col-md-6">
 
-<div class="icon text-warning">
-<i class="fa-solid fa-check-to-slot"></i>
-</div>
+            <div class="stat-card">
 
-<div class="stat">
-{{ total_votes }}
-</div>
+                <div class="stat-icon green-icon">
 
-<div class="analytics-title">
+                    <i class="fa-solid fa-user-group"></i>
 
-Votes Cast
+                </div>
 
-</div>
+                <div class="stat-number">
 
-</div>
+                    {{ total_candidates }}
 
-</div>
+                </div>
 
-<div class="col-lg-3">
+                <div class="stat-label">
 
-<div class="card text-center p-4">
+                    Candidates
 
-<div class="icon text-info">
-<i class="fa-solid fa-link"></i>
-</div>
+                </div>
 
-<div class="stat">
+            </div>
 
-{% if blockchain_status %}
-🟢
-{% else %}
-🔴
-{% endif %}
+        </div>
 
-</div>
 
-<div class="analytics-title">
 
-Blockchain
+        <!-- Votes -->
 
-</div>
+        <div class="col-xl-3 col-md-6">
 
-</div>
+            <div class="stat-card">
 
-</div>
+                <div class="stat-icon yellow-icon">
 
-</div>
+                    <i class="fa-solid fa-check-to-slot"></i>
 
-<!-- ========================= -->
-<!-- Advanced Analytics -->
-<!-- ========================= -->
+                </div>
 
-<div class="row g-4 mt-2">
+                <div class="stat-number">
 
-<div class="col-lg-3">
+                    {{ total_votes }}
 
-<div class="card text-center p-4">
+                </div>
 
-<div class="icon text-danger">
-<i class="fa-solid fa-user-clock"></i>
-</div>
+                <div class="stat-label">
 
-<div class="stat">
-{{ remaining_voters }}
-</div>
+                    Votes Cast
 
-<div class="analytics-title">
+                </div>
 
-Remaining Voters
+            </div>
 
-</div>
+        </div>
 
-</div>
 
-</div>
 
-<div class="col-lg-3">
+        <!-- Blockchain -->
 
-<div class="card text-center p-4">
+        <div class="col-xl-3 col-md-6">
 
-<div class="icon text-primary">
-<i class="fa-solid fa-chart-line"></i>
-</div>
+            <div class="stat-card">
 
-<div class="stat">
-{{ voting_percentage }}%
-</div>
+                <div class="stat-icon purple-icon">
 
-<div class="analytics-title">
+                    <i class="fa-solid fa-link"></i>
 
-Voting Percentage
+                </div>
 
-</div>
+                <div class="stat-number">
 
-</div>
+                    {% if blockchain_status %}
 
-</div>
+                        <span style="color:#198754;">
+                            Online
+                        </span>
 
-<div class="col-lg-3">
+                    {% else %}
 
-<div class="card text-center p-4">
+                        <span style="color:#dc3545;">
+                            Offline
+                        </span>
 
-<div class="icon text-success">
-<i class="fa-solid fa-trophy"></i>
-</div>
+                    {% endif %}
 
-<div class="stat">
+                </div>
 
-{% if winner %}
-{{ winner.name }}
-{% else %}
---
-{% endif %}
+                <div class="stat-label">
 
-</div>
+                    Blockchain Network
 
-<div class="analytics-title">
+                </div>
 
-Leading Candidate
-
-</div>
-
-</div>
-
-</div>
-
-<div class="col-lg-3">
-
-<div class="card text-center p-4">
-
-<div class="icon text-warning">
-<i class="fa-solid fa-arrow-down"></i>
-</div>
-
-<div class="stat">
-
-{% if lowest_candidate %}
-{{ lowest_candidate.name }}
-{% else %}
---
-{% endif %}
-
-</div>
-
-<div class="analytics-title">
-
-Lowest Candidate
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- ========================= -->
-<!-- Charts Section -->
-<!-- ========================= -->
-
-<div class="row mt-5">
-
-    <div class="col-lg-6">
-
-        <div class="card p-4">
-
-            <h4 class="text-center mb-4">
-
-                📊 Vote Distribution
-
-            </h4>
-
-            <canvas id="barChart"></canvas>
+            </div>
 
         </div>
 
     </div>
 
-    <div class="col-lg-6">
 
-        <div class="card p-4">
 
-            <h4 class="text-center mb-4">
+    <!-- =========================
+         Advanced Statistics
+    ========================= -->
 
-                🥧 Vote Share
+    <div class="row g-4 mt-1">
 
-            </h4>
 
-            <canvas id="pieChart"></canvas>
+        <!-- Remaining Voters -->
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="stat-card">
+
+                <div class="stat-icon red-icon">
+
+                    <i class="fa-solid fa-user-clock"></i>
+
+                </div>
+
+                <div class="stat-number">
+
+                    {{ remaining_voters }}
+
+                </div>
+
+                <div class="stat-label">
+
+                    Remaining Voters
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Voting Percentage -->
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="stat-card">
+
+                <div class="stat-icon blue-icon">
+
+                    <i class="fa-solid fa-chart-line"></i>
+
+                </div>
+
+                <div class="stat-number">
+
+                    {{ voting_percentage }}%
+
+                </div>
+
+                <div class="stat-label">
+
+                    Voting Percentage
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Leading Candidate -->
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="stat-card">
+
+                <div class="stat-icon green-icon">
+
+                    <i class="fa-solid fa-trophy"></i>
+
+                </div>
+
+                <div class="stat-number">
+
+                    {% if winner %}
+
+                        {{ winner.name }}
+
+                    {% else %}
+
+                        --
+
+                    {% endif %}
+
+                </div>
+
+                <div class="stat-label">
+
+                    Leading Candidate
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Lowest Candidate -->
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="stat-card">
+
+                <div class="stat-icon yellow-icon">
+
+                    <i class="fa-solid fa-arrow-down"></i>
+
+                </div>
+
+                <div class="stat-number">
+
+                    {% if lowest_candidate %}
+
+                        {{ lowest_candidate.name }}
+
+                    {% else %}
+
+                        --
+
+                    {% endif %}
+
+                </div>
+
+                <div class="stat-label">
+
+                    Lowest Candidate
+
+                </div>
+
+            </div>
 
         </div>
 
     </div>
 
-</div>
 
-<!-- ========================= -->
-<!-- Add Candidate -->
-<!-- ========================= -->
 
-<div class="card mt-5 p-4">
+    <!-- =========================
+         Charts
+    ========================= -->
 
-    <h3 class="mb-4">
-        <i class="fa-solid fa-user-plus"></i>
-        Add New Candidate
-    </h3>
+    <div class="row g-4">
 
-    <form method="POST" enctype="multipart/form-data">
 
-        <div class="row g-3">
+        <!-- Bar Chart -->
 
-            <!-- Candidate Name -->
-            <div class="col-md-4">
+        <div class="col-lg-6">
+
+            <div class="section-card">
+
+                <div class="section-heading">
+
+                    <i class="fa-solid fa-chart-column"></i>
+
+                    Vote Distribution
+
+                </div>
+
+                <div class="chart-container">
+
+                    <canvas id="barChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Pie Chart -->
+
+        <div class="col-lg-6">
+
+            <div class="section-card">
+
+                <div class="section-heading">
+
+                    <i class="fa-solid fa-chart-pie"></i>
+
+                    Vote Share
+
+                </div>
+
+                <div class="chart-container">
+
+                    <canvas id="pieChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         Add Candidate
+    ========================= -->
+
+    <div class="section-card">
+
+        <div class="section-heading">
+
+            <i class="fa-solid fa-user-plus"></i>
+
+            Add New Candidate
+
+        </div>
+
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <div class="row g-4">
+
+
+                <!-- Candidate Name -->
+
+                <div class="col-lg-4">
+
+                    <label class="form-label">
+
+                        Candidate Name
+
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        class="form-control"
+                        placeholder="Enter candidate name"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- Party -->
+
+                <div class="col-lg-4">
+
+                    <label class="form-label">
+
+                        Political Party
+
+                    </label>
+
+                    <input
+                        type="text"
+                        name="party"
+                        class="form-control"
+                        placeholder="Enter party name"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- Photo -->
+
+                <div class="col-lg-4">
+
+                    <label class="form-label">
+
+                        Candidate Photo
+
+                    </label>
+
+                    <input
+                        type="file"
+                        name="photo"
+                        class="form-control"
+                        accept="image/*"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- Submit -->
+
+                <div class="col-12">
+
+                    <button
+                        type="submit"
+                        class="btn btn-success w-100"
+                    >
+
+                        <i class="fa-solid fa-plus me-2"></i>
+
+                        Add Candidate
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+
+    <!-- =========================
+         Candidate Management
+    ========================= -->
+
+    <div class="section-card">
+
+        <div
+            class="candidate-header d-flex justify-content-between align-items-center mb-4"
+        >
+
+            <div class="section-heading mb-0">
+
+                <i class="fa-solid fa-users-gear"></i>
+
+                Candidate Management
+
+            </div>
+
+
+            <div class="search-box">
+
                 <input
                     type="text"
-                    name="name"
-                    class="form-control form-control-lg"
-                    placeholder="Candidate Name"
-                    required>
-            </div>
+                    id="searchCandidate"
+                    class="form-control"
+                    placeholder="Search candidate..."
+                >
 
-            <!-- Party Name -->
-            <div class="col-md-4">
-                <input
-                    type="text"
-                    name="party"
-                    class="form-control form-control-lg"
-                    placeholder="Party Name"
-                    required>
-            </div>
-
-            <!-- Candidate Photo -->
-            <div class="col-md-4">
-                <input
-                    type="file"
-                    name="photo"
-                    class="form-control form-control-lg"
-                    accept="image/*"
-                    required>
-            </div>
-
-            <!-- Submit Button -->
-            <div class="col-12 d-grid mt-3">
-                <button
-                    type="submit"
-                    class="btn btn-success btn-lg">
-
-                    <i class="fa-solid fa-plus"></i>
-                    Add Candidate
-
-                </button>
             </div>
 
         </div>
 
-    </form>
 
-</div>
 
-<!-- ========================= -->
-<!-- Candidate Management -->
-<!-- ========================= -->
+        <div class="table-responsive">
 
-<div class="card mt-5 p-4">
+            <table
+                class="table candidate-table align-middle text-center"
+                id="candidateTable"
+            >
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+                <thead>
 
-        <h3>
+                    <tr>
 
-            <i class="fa-solid fa-list"></i>
+                        <th>#</th>
 
-            Candidate Management
+                        <th>Photo</th>
 
-        </h3>
+                        <th>Candidate</th>
 
-        <div style="width:300px;">
+                        <th>Party</th>
 
-            <input
-            type="text"
-            id="searchCandidate"
-            class="form-control"
-            placeholder="🔍 Search Candidate...">
+                        <th>Votes</th>
 
-        </div>
+                        <th style="min-width:220px;">
+                            Vote Share
+                        </th>
 
-    </div>
+                        <th>
+                            Actions
+                        </th>
 
-    <div class="table-responsive">
+                    </tr>
 
-        <table
-        class="table table-hover table-bordered align-middle text-center"
-        id="candidateTable">
+                </thead>
 
-            <thead class="table-dark">
 
-                <tr>
+                <tbody>
 
-                    <th>#</th>
+                    {% for candidate in candidates %}
 
-                    <th>Candidate</th>
+                    <tr>
 
-                    <th>Party</th>
 
-                    <th>Votes</th>
+                        <!-- Number -->
 
-                    <th>Vote %</th>
+                        <td>
 
-                    <th width="220">
+                            <strong>
+                                {{ loop.index }}
+                            </strong>
 
-                        Actions
+                        </td>
 
-                    </th>
 
-                </tr>
 
-            </thead>
+                        <!-- Photo -->
 
-            <tbody>
+                        <td>
 
-            {% for candidate in candidates %}
+                            {% if candidate.photo %}
 
-                <tr>
+                                <img
+                                    src="{{ url_for(
+                                        'static',
+                                        filename='uploads/' + candidate.photo
+                                    ) }}"
+                                    alt="{{ candidate.name }}"
+                                    class="candidate-photo"
+                                >
 
-                    <td>
-
-                        {{ loop.index }}
-
-                    </td>
-
-                    <td>
-
-                        {{ candidate.name }}
-
-                    </td>
-
-                    <td>
-
-                        {{ candidate.party }}
-
-                    </td>
-
-                    <td>
-
-                        {{ candidate.votes }}
-
-                    </td>
-
-                    <td width="25%">
-
-                        <div class="progress">
-
-                            <div
-                            class="progress-bar bg-success"
-
-                            style="width:
-                            {% if total_votes > 0 %}
-                            {{ (candidate.votes / total_votes * 100)|round(1) }}%
                             {% else %}
-                            0%
-                            {% endif %}
-                            ">
 
-                            {% if total_votes > 0 %}
-                            {{ (candidate.votes / total_votes * 100)|round(1) }}%
-                            {% else %}
-                            0%
+                                <i
+                                    class="fa-solid fa-user-tie fa-2x text-secondary"
+                                ></i>
+
                             {% endif %}
+
+                        </td>
+
+
+
+                        <!-- Name -->
+
+                        <td>
+
+                            <div class="candidate-name">
+
+                                {{ candidate.name }}
 
                             </div>
 
-                        </div>
+                        </td>
+
+
+
+                        <!-- Party -->
+
+                        <td>
+
+                            <div class="party-name">
+
+                                {{ candidate.party }}
+
+                            </div>
+
+                        </td>
+
+
+
+                        <!-- Votes -->
+
+                        <td>
+
+                            <span class="vote-count">
+
+                                {{ candidate.votes }}
+
+                            </span>
+
+                        </td>
+
+
+
+                        <!-- Vote Percentage -->
+
+                        <td>
+
+                            <div class="progress">
+
+                                <div
+                                    class="progress-bar bg-success"
+                                    role="progressbar"
+
+                                    style="
+                                        width:
+                                        {% if total_votes > 0 %}
+                                            {{ (
+                                                candidate.votes
+                                                / total_votes
+                                                * 100
+                                            )|round(1) }}%
+                                        {% else %}
+                                            0%
+                                        {% endif %}
+                                    "
+                                >
+
+                                    {% if total_votes > 0 %}
+
+                                        {{
+                                            (
+                                                candidate.votes
+                                                / total_votes
+                                                * 100
+                                            )|round(1)
+                                        }}%
+
+                                    {% else %}
+
+                                        0%
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+
+                        <!-- Actions -->
+
+                        
+
+                        <td>
+
+                       <span class="badge bg-secondary">
+                       <i class="fa-solid fa-lock me-1"></i>
+                        Locked
+                       </span>
 
                     </td>
 
-                    <td>
 
-                        <a
-                        href="/edit_candidate/{{ candidate.id }}"
-                        class="btn btn-warning btn-sm">
+                    </tr>
 
-                            <i class="fa-solid fa-pen"></i>
+                    {% endfor %}
 
-                            Edit
+                </tbody>
 
-                        </a>
+            </table>
 
-                        <a
-                        href="/delete_candidate/{{ candidate.id }}"
-                        class="btn btn-danger btn-sm"
+        </div>
 
-                        onclick="return confirm('Delete this candidate?')">
+    </div>
 
-                            <i class="fa-solid fa-trash"></i>
 
-                            Delete
 
-                        </a>
+    <!-- =========================
+         Security Information
+    ========================= -->
 
-                    </td>
+    <div class="security-box">
 
-                </tr>
+        <h5>
 
-            {% endfor %}
+            <i class="fa-solid fa-shield-halved text-primary me-2"></i>
 
-            </tbody>
+            Election Security
 
-        </table>
+        </h5>
+
+
+        <div class="row">
+
+
+            <div class="col-md-4">
+
+                <div class="security-item">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    Blockchain vote verification
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="security-item">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    One person â€” one vote
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="security-item">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    Administrator authorization
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="security-item">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    Candidate validation
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="security-item">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    Transaction records
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="security-item">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    Election reset protection
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+     Reports & Administrative Tools
+========================= -->
+
+<div class="section-card mt-4">
+
+    <div class="section-title">
+        <i class="fas fa-tools"></i>
+        Reports & Administrative Tools
+    </div>
+
+    <p class="text-muted mb-4">
+        Manage election records, view blockchain transactions,
+        generate reports and perform administrative operations.
+    </p>
+
+    <div class="row g-4">
+
+        <!-- Blockchain Transactions -->
+        <div class="col-md-6 col-lg-4">
+            <div class="report-card">
+
+                <div class="report-icon">
+                    <i class="fas fa-link"></i>
+                </div>
+
+                <div class="report-content">
+                    <h5>Blockchain Transactions</h5>
+
+                    <p>
+                        View all verified voting transactions
+                        recorded on the blockchain.
+                    </p>
+
+                    <a href="{{ url_for('transactions') }}"
+                       class="btn btn-primary">
+                        <i class="fas fa-eye"></i>
+                        View Transactions
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- PDF Report -->
+        <div class="col-md-6 col-lg-4">
+            <div class="report-card">
+
+                <div class="report-icon pdf-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+
+                <div class="report-content">
+                    <h5>Election PDF Report</h5>
+
+                    <p>
+                        Generate a professional PDF report
+                        containing election results.
+                    </p>
+
+                    <a href="{{ url_for('export_pdf') }}"
+                       class="btn btn-danger">
+                        <i class="fas fa-file-pdf"></i>
+                        Generate PDF
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Excel Report -->
+        <div class="col-md-6 col-lg-4">
+            <div class="report-card">
+
+                <div class="report-icon excel-icon">
+                    <i class="fas fa-file-excel"></i>
+                </div>
+
+                <div class="report-content">
+                    <h5>Election Excel Report</h5>
+
+                    <p>
+                        Export election data and results
+                        into an Excel spreadsheet.
+                    </p>
+
+                    <a href="{{ url_for('export_excel') }}"
+                       class="btn btn-success">
+                        <i class="fas fa-file-excel"></i>
+                        Export Excel
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Download Report -->
+        <div class="col-md-6 col-lg-4">
+            <div class="report-card">
+
+                <div class="report-icon download-icon">
+                    <i class="fas fa-download"></i>
+                </div>
+
+                <div class="report-content">
+                    <h5>Download Election Report</h5>
+
+                    <p>
+                        Download the complete election
+                        report as a PDF document.
+                    </p>
+
+                    <a href="{{ url_for('download_report') }}"
+                       class="btn btn-info">
+                        <i class="fas fa-download"></i>
+                        Download Report
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Reset Election -->
+        <div class="col-md-6 col-lg-4">
+            <div class="report-card">
+
+                <div class="report-icon reset-icon">
+                    <i class="fas fa-rotate"></i>
+                </div>
+
+                <div class="report-content">
+                    <h5>Reset Election</h5>
+
+                    <p>
+                        Reset votes, voter status and
+                        election transactions.
+                    </p>
+
+                    <form
+    method="POST"
+    action="{{ url_for('reset_election') }}"
+>
+
+    <input
+        type="hidden"
+        name="csrf_token"
+        value="{{ csrf_token() }}"
+    >
+
+    <button
+        type="submit"
+        class="btn btn-warning"
+        onclick="return confirm(
+            'Are you sure you want to reset the election? This will reset all votes and voter status.'
+        );"
+    >
+
+        <i class="fas fa-rotate"></i>
+
+        Reset Election
+
+    </button>
+
+</form>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- User Dashboard -->
+        <div class="col-md-6 col-lg-4">
+            <div class="report-card">
+
+                <div class="report-icon dashboard-icon">
+                    <i class="fas fa-gauge-high"></i>
+                </div>
+
+                <div class="report-content">
+                    <h5>User Dashboard</h5>
+
+                    <p>
+                        Return to the main voting system
+                        dashboard.
+                    </p>
+
+                    <a href="{{ url_for('dashboard') }}"
+                       class="btn btn-secondary">
+                        <i class="fas fa-home"></i>
+                        Go to Dashboard
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Report Information -->
+    <div class="report-info-box mt-4">
+
+        <div class="d-flex align-items-start gap-3">
+
+            <i class="fas fa-circle-info"></i>
+
+            <div>
+                <h6>Administrative Information</h6>
+
+                <p class="mb-0">
+                    Election reports and transaction records are
+                    generated using the latest available election
+                    data. Blockchain transactions provide
+                    verifiable records of votes.
+                </p>
+            </div>
+
+        </div>
 
     </div>
 
 </div>
 
-<hr class="my-5">
 
-<div class="card shadow">
 
-<div class="card-header bg-dark text-white">
+    <!-- =========================
+         Footer
+    ========================= -->
 
-<h4>
+    <footer>
 
-⛓ Blockchain Transaction History
+        <div>
 
-</h4>
+            <i class="fa-solid fa-cube me-1"></i>
 
-</div>
+            Blockchain Voting System V3.0
 
-<div class="card-body">
+        </div>
 
-<table class="table table-bordered table-hover text-center">
+        <div class="mt-1">
 
-<thead class="table-dark">
+            Secure â€¢ Transparent â€¢ Reliable
 
-<tr>
+        </div>
 
-<th>#</th>
+    </footer>
 
-<th>Voter</th>
-
-<th>Candidate</th>
-
-<th>Transaction Hash</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-{% for tx in transactions %}
-
-<tr>
-
-<td>{{ loop.index }}</td>
-
-<td>{{ tx.voter_name }}</td>
-
-<td>{{ tx.candidate_name }}</td>
-
-<td style="font-size:12px">
-
-{{ tx.tx_hash }}
-
-</td>
-
-</tr>
-
-{% endfor %}
-
-</tbody>
-
-</table>
 
 </div>
 
-</div>
 
-<!-- ========================= -->
-<!-- Bottom Buttons -->
-<!-- ========================= -->
 
-<div class="text-center mt-5">
+<!-- Bootstrap -->
 
-    <a
-    href="/transactions"
-    class="btn btn-dark btn-lg me-2">
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+></script>
 
-        <i class="fa-solid fa-link"></i>
 
-        Blockchain Transactions
-
-    </a>
-<a
-href="/export_pdf"
-class="btn btn-success btn-lg me-2">
-
-    <i class="fa-solid fa-file-pdf"></i>
-
-    Export PDF
-
-</a>
-    <a
-href="/export_excel"
-class="btn btn-success btn-lg me-2">
-
-    <i class="fa-solid fa-file-excel"></i>
-
-    Export Excel
-
-</a>
-
-    <a
-    href="/reset_election"
-    class="btn btn-danger btn-lg me-2"
-    onclick="return confirm('Reset the entire election? This cannot be undone.')">
-
-        <i class="fa-solid fa-rotate-left"></i>
-
-        Reset Election
-
-    </a>
-
-    <a
-    href="/dashboard"
-    class="btn btn-primary btn-lg">
-
-        <i class="fa-solid fa-arrow-left"></i>
-
-        Back to Dashboard
-
-    </a>
-
-</div>
-
-<!-- ========================= -->
-<!-- JavaScript -->
-<!-- ========================= -->
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
 
-// ===========================
-// Chart Data
-// ===========================
+    /* =========================
+       Chart Data
+    ========================= */
 
-const labels = {{ chart_labels | tojson }};
-const votes = {{ chart_votes | tojson }};
+    const labels = {{ chart_labels | tojson }};
 
-// ===========================
-// Bar Chart
-// ===========================
+    const votes = {{ chart_votes | tojson }};
 
-new Chart(document.getElementById("barChart"), {
 
-    type: "bar",
 
-    data: {
+    /* =========================
+       Bar Chart
+    ========================= */
 
-        labels: labels,
+    new Chart(
+        document.getElementById("barChart"),
+        {
 
-        datasets: [{
+            type: "bar",
 
-            label: "Votes",
+            data: {
 
-            data: votes,
+                labels: labels,
 
-            backgroundColor: [
-                "#0d6efd",
-                "#198754",
-                "#ffc107",
-                "#dc3545",
-                "#6610f2",
-                "#20c997",
-                "#fd7e14",
-                "#6f42c1"
-            ],
+                datasets: [
 
-            borderRadius: 8
+                    {
 
-        }]
+                        label: "Votes",
 
-    },
+                        data: votes,
 
-    options: {
+                        backgroundColor: [
+                            "#0d6efd",
+                            "#198754",
+                            "#ffc107",
+                            "#dc3545",
+                            "#6610f2",
+                            "#20c997",
+                            "#fd7e14",
+                            "#6f42c1"
+                        ],
 
-        responsive: true,
+                        borderRadius: 8,
 
-        plugins: {
+                        borderSkipped: false
 
-            legend: {
+                    }
 
-                display: false
+                ]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: {
+
+                        display: false
+
+                    }
+
+                },
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        ticks: {
+
+                            precision: 0
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+    );
+
+
+
+    /* =========================
+       Pie Chart
+    ========================= */
+
+    new Chart(
+        document.getElementById("pieChart"),
+        {
+
+            type: "pie",
+
+            data: {
+
+                labels: labels,
+
+                datasets: [
+
+                    {
+
+                        data: votes,
+
+                        backgroundColor: [
+                            "#0d6efd",
+                            "#198754",
+                            "#ffc107",
+                            "#dc3545",
+                            "#6610f2",
+                            "#20c997",
+                            "#fd7e14",
+                            "#6f42c1"
+                        ],
+
+                        borderWidth: 2,
+
+                        borderColor: "#ffffff"
+
+                    }
+
+                ]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: {
+
+                        position: "bottom"
+
+                    }
+
+                }
 
             }
 
         }
 
-    }
+    );
 
-});
 
-// ===========================
-// Pie Chart
-// ===========================
 
-new Chart(document.getElementById("pieChart"), {
+    /* =========================
+       Candidate Search
+    ========================= */
 
-    type: "pie",
+    document
+        .getElementById("searchCandidate")
+        .addEventListener(
+            "keyup",
+            function () {
 
-    data: {
+                const filter =
+                    this.value.toLowerCase();
 
-        labels: labels,
+                const rows =
+                    document.querySelectorAll(
+                        "#candidateTable tbody tr"
+                    );
 
-        datasets: [{
+                rows.forEach(
+                    function (row) {
 
-            data: votes,
+                        const text =
+                            row.innerText.toLowerCase();
 
-            backgroundColor: [
-                "#0d6efd",
-                "#198754",
-                "#ffc107",
-                "#dc3545",
-                "#6610f2",
-                "#20c997",
-                "#fd7e14",
-                "#6f42c1"
-            ]
+                        if (text.includes(filter)) {
 
-        }]
+                            row.style.display = "";
 
-    },
+                        } else {
 
-    options: {
+                            row.style.display = "none";
 
-        responsive: true
+                        }
 
-    }
+                    }
+                );
 
-});
-
-// ===========================
-// Candidate Search
-// ===========================
-
-document.getElementById("searchCandidate").addEventListener("keyup", function () {
-
-    let filter = this.value.toLowerCase();
-
-    let rows = document.querySelectorAll("#candidateTable tbody tr");
-
-    rows.forEach(function(row){
-
-        let text = row.innerText.toLowerCase();
-
-        if(text.includes(filter)){
-
-            row.style.display="";
-
-        }else{
-
-            row.style.display="none";
-
-        }
-
-    });
-
-});
+            }
+        );
 
 </script>
+
 
 </body>
 
 </html>
-
