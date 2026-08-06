@@ -459,50 +459,54 @@ Lowest Candidate
 <div class="card mt-5 p-4">
 
     <h3 class="mb-4">
-
         <i class="fa-solid fa-user-plus"></i>
-
         Add New Candidate
-
     </h3>
 
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
 
         <div class="row g-3">
 
-            <div class="col-md-5">
-
+            <!-- Candidate Name -->
+            <div class="col-md-4">
                 <input
-                type="text"
-                name="name"
-                class="form-control form-control-lg"
-                placeholder="Candidate Name"
-                required>
-
+                    type="text"
+                    name="name"
+                    class="form-control form-control-lg"
+                    placeholder="Candidate Name"
+                    required>
             </div>
 
-            <div class="col-md-5">
-
+            <!-- Party Name -->
+            <div class="col-md-4">
                 <input
-                type="text"
-                name="party"
-                class="form-control form-control-lg"
-                placeholder="Party Name"
-                required>
-
+                    type="text"
+                    name="party"
+                    class="form-control form-control-lg"
+                    placeholder="Party Name"
+                    required>
             </div>
 
-            <div class="col-md-2 d-grid">
+            <!-- Candidate Photo -->
+            <div class="col-md-4">
+                <input
+                    type="file"
+                    name="photo"
+                    class="form-control form-control-lg"
+                    accept="image/*"
+                    required>
+            </div>
 
+            <!-- Submit Button -->
+            <div class="col-12 d-grid mt-3">
                 <button
-                class="btn btn-success btn-lg">
+                    type="submit"
+                    class="btn btn-success btn-lg">
 
                     <i class="fa-solid fa-plus"></i>
-
-                    Add
+                    Add Candidate
 
                 </button>
-
             </div>
 
         </div>
@@ -664,11 +668,114 @@ Lowest Candidate
 
 </div>
 
+<hr class="my-5">
+
+<div class="card shadow">
+
+<div class="card-header bg-dark text-white">
+
+<h4>
+
+⛓ Blockchain Transaction History
+
+</h4>
+
+</div>
+
+<div class="card-body">
+
+<table class="table table-bordered table-hover text-center">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>#</th>
+
+<th>Voter</th>
+
+<th>Candidate</th>
+
+<th>Transaction Hash</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for tx in transactions %}
+
+<tr>
+
+<td>{{ loop.index }}</td>
+
+<td>{{ tx.voter_name }}</td>
+
+<td>{{ tx.candidate_name }}</td>
+
+<td style="font-size:12px">
+
+{{ tx.tx_hash }}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
 <!-- ========================= -->
 <!-- Bottom Buttons -->
 <!-- ========================= -->
 
-<div class="text-center mt-5 mb-5">
+<div class="text-center mt-5">
+
+    <a
+    href="/transactions"
+    class="btn btn-dark btn-lg me-2">
+
+        <i class="fa-solid fa-link"></i>
+
+        Blockchain Transactions
+
+    </a>
+<a
+href="/export_pdf"
+class="btn btn-success btn-lg me-2">
+
+    <i class="fa-solid fa-file-pdf"></i>
+
+    Export PDF
+
+</a>
+    <a
+href="/export_excel"
+class="btn btn-success btn-lg me-2">
+
+    <i class="fa-solid fa-file-excel"></i>
+
+    Export Excel
+
+</a>
+
+    <a
+    href="/reset_election"
+    class="btn btn-danger btn-lg me-2"
+    onclick="return confirm('Reset the entire election? This cannot be undone.')">
+
+        <i class="fa-solid fa-rotate-left"></i>
+
+        Reset Election
+
+    </a>
 
     <a
     href="/dashboard"

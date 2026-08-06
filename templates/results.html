@@ -19,22 +19,36 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
 
 body{
     background:#eef2f7;
+    font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;
 }
 
 .header{
     background:linear-gradient(135deg,#198754,#0d6efd);
     color:white;
-    border-radius:20px;
     padding:35px;
+    border-radius:20px;
     text-align:center;
     margin-bottom:35px;
-    box-shadow:0 10px 25px rgba(0,0,0,.2);
+    box-shadow:0 12px 30px rgba(0,0,0,.20);
 }
 
 .card{
     border:none;
-    border-radius:20px;
+    border-radius:18px;
     box-shadow:0 10px 25px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.summary-card h5{
+    color:#666;
+}
+
+.summary-card h2{
+    font-weight:bold;
 }
 
 .progress{
@@ -42,14 +56,36 @@ body{
     border-radius:30px;
 }
 
+.progress-bar{
+    font-weight:bold;
+}
+
 .table{
     background:white;
 }
 
-.winner{
-    color:#198754;
-    font-weight:bold;
-    font-size:22px;
+.table th{
+    vertical-align:middle;
+}
+
+.table td{
+    vertical-align:middle;
+}
+
+.winner-card{
+    border-left:6px solid #ffc107;
+}
+
+.runner-card{
+    border-left:6px solid #6c757d;
+}
+
+.chart-card{
+    min-height:450px;
+}
+
+canvas{
+    max-height:330px;
 }
 
 </style>
@@ -60,6 +96,8 @@ body{
 
 <div class="container mt-4">
 
+<!-- Header -->
+
 <div class="header">
 
 <h2>
@@ -68,218 +106,613 @@ body{
 
 </h2>
 
-<p>
+<p class="mb-1">
 
 Blockchain Based Voting System
 
 </p>
 
-<p>
+<p class="mb-0">
 
-Last Updated:
-<span id="time"></span>
+Last Updated :
+<strong id="time"></strong>
 
 </p>
 
 </div>
 
+<!-- Election Summary -->
+
+<div class="card mb-4 shadow">
+
+<div class="card-header bg-dark text-white">
+
+<h4 class="mb-0">
+
+📋 Election Summary
+
+</h4>
+
+</div>
+
+<div class="card-body">
+
+<div class="row text-center">
+
+<div class="col-md-3 summary-card">
+
+<h5>👥 Registered Users</h5>
+
+<h2 class="text-primary">
+
+{{ total_users }}
+
+</h2>
+
+</div>
+
+<div class="col-md-3 summary-card">
+
+<h5>🗳 Votes Cast</h5>
+
+<h2 class="text-success">
+
+{{ total_votes }}
+
+</h2>
+
+</div>
+
+<div class="col-md-3 summary-card">
+
+<h5>📈 Voting Percentage</h5>
+
+<h2 class="text-warning">
+
+{{ voting_percentage }}%
+
+</h2>
+
+</div>
+
+<div class="col-md-3 summary-card">
+
+<h5>📢 Election Status</h5>
+
+{% if election_status=="Open" %}
+
+<h2 class="text-success">
+
+🟢 OPEN
+
+</h2>
+
+{% else %}
+
+<h2 class="text-danger">
+
+🔴 CLOSED
+
+</h2>
+
+{% endif %}
+
+</div>
+
+</div>
+
+<hr>
+
+<div class="text-center">
+
+<h5>
+
+🏆 Winning Margin
+
+</h5>
+
+<h2 class="text-info">
+
+{{ winning_margin }} Vote(s)
+
+</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Statistics Cards -->
+
 <div class="row mb-4">
 
-<div class="col-lg-4">
+<div class="col-lg-3 mb-3">
 
 <div class="card p-4 text-center">
 
 <h5>Total Candidates</h5>
 
-<h2>{{ candidates|length }}</h2>
+<h2>
+
+{{ candidates|length }}
+
+</h2>
 
 </div>
 
 </div>
 
-<div class="col-lg-4">
+<div class="col-lg-3 mb-3">
 
 <div class="card p-4 text-center">
 
 <h5>Total Votes</h5>
 
-<h2>{{ total_votes }}</h2>
+<h2>
+
+{{ total_votes }}
+
+</h2>
 
 </div>
 
 </div>
 
-<div class="col-lg-4">
+<div class="col-lg-3 mb-3">
 
-<div class="card p-4 text-center">
+<div class="card p-4 text-center winner-card">
 
-<h5>Current Winner</h5>
+<h4 class="text-warning">
+
+👑 Winner
+
+</h4>
 
 {% if winner %}
 
-<div class="winner">
+<h2 class="mt-3">
 
-🏆 {{ winner.name }}
+{{ winner.name }}
 
-<br>
+</h2>
 
-<small>{{ winner.party }}</small>
+<h5>
 
-</div>
+{{ winner.party }}
 
-{% else %}
+</h5>
 
-No Winner Yet
+<h3 class="text-success">
 
-{% endif %}
-
-</div>
-
-</div>
-
-</div>
-
-<div class="row">
-
-<div class="col-lg-6">
-
-<div class="card p-4">
-
-<h4 class="text-center mb-4">
-
-Vote Distribution
-
-</h4>
-
-<canvas id="barChart"></canvas>
-
-</div>
-
-</div>
-
-<div class="col-lg-6">
-
-<div class="card p-4">
-
-<h4 class="text-center mb-4">
-
-Vote Share
-
-</h4>
-
-<canvas id="pieChart"></canvas>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="card mt-5 p-4">
-
-<h3 class="mb-4">
-
-Candidate Results
+{{ winner.votes }} Votes
 
 </h3>
 
-<table class="table table-bordered table-hover text-center">
+{% if total_votes>0 %}
 
-<thead class="table-dark">
+<p>
 
-<tr>
+Vote Share :
 
-<th>ID</th>
+<strong>
 
-<th>Name</th>
+{{ ((winner.votes/total_votes)*100)|round(2) }}%
 
-<th>Party</th>
+</strong>
 
-<th>Votes</th>
+</p>
 
-<th>Progress</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-{% for candidate in candidates %}
-
-<tr>
-
-<td>{{ candidate.id }}</td>
-
-<td>{{ candidate.name }}</td>
-
-<td>{{ candidate.party }}</td>
-
-<td>{{ candidate.votes }}</td>
-
-<td width="35%">
-
-<div class="progress">
-
-{% set percentage = 0 %}
-{% if total_votes > 0 %}
-    {% set percentage = (candidate.votes / total_votes * 100)|round(1) %}
 {% endif %}
 
-<div
-class="progress-bar bg-success"
-style="width: {{ percentage }}%;">
+{% else %}
 
-{{ percentage }}%
+<h5>No Winner Yet</h5>
+
+{% endif %}
+
+</div>
+
+</div>
+
+<div class="col-lg-3 mb-3">
+
+<div class="card p-4 text-center runner-card">
+
+<h4 class="text-secondary">
+
+🥈 Runner-up
+
+</h4>
+
+{% if runner_up %}
+
+<h2 class="mt-3">
+
+{{ runner_up.name }}
+
+</h2>
+
+<h5>
+
+{{ runner_up.party }}
+
+</h5>
+
+<h3 class="text-primary">
+
+{{ runner_up.votes }} Votes
+
+</h3>
+
+{% if total_votes>0 %}
+
+<p>
+
+Vote Share :
+
+<strong>
+
+{{ ((runner_up.votes/total_votes)*100)|round(2) }}%
+
+</strong>
+
+</p>
+
+{% endif %}
+
+{% else %}
+
+<h5>No Runner-up</h5>
+
+{% endif %}
 
 </div>
 
 </div>
 
-</td>
+</div>
 
-</tr>
+<!-- Charts -->
 
-{% endfor %}
+<div class="row mb-5">
 
-</tbody>
+    <!-- Bar Chart -->
 
-</table>
+    <div class="col-lg-6 mb-4">
+
+        <div class="card chart-card p-4">
+
+            <h4 class="text-center mb-4">
+
+                📊 Candidate Votes
+
+            </h4>
+
+            <canvas id="barChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <!-- Pie Chart -->
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="card chart-card p-4">
+
+            <h4 class="text-center mb-4">
+
+                🥧 Vote Share
+
+            </h4>
+
+            <canvas id="pieChart"></canvas>
+
+        </div>
+
+    </div>
 
 </div>
 
-<div class="text-center mt-4 mb-5">
+<!-- Candidate Result Table -->
 
-<a href="/dashboard"
-class="btn btn-primary">
+<div class="card p-4 shadow">
 
-Back to Dashboard
+    <h3 class="mb-4">
 
-</a>
+        🗳 Candidate Results
+
+    </h3>
+
+    <div class="table-responsive">
+
+        <table class="table table-bordered table-hover text-center align-middle">
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Candidate</th>
+
+                    <th>Party</th>
+
+                    <th>Votes</th>
+
+                    <th width="35%">Vote Share</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for candidate in candidates %}
+
+                {% set percentage = 0 %}
+
+                {% if total_votes > 0 %}
+
+                    {% set percentage = (candidate.votes / total_votes * 100)|round(1) %}
+
+                {% endif %}
+
+                <tr>
+
+                    <td>
+
+                        {{ candidate.id }}
+
+                    </td>
+
+                    <td>
+
+                        <strong>{{ candidate.name }}</strong>
+
+                    </td>
+
+                    <td>
+
+                        {{ candidate.party }}
+
+                    </td>
+
+                    <td>
+
+                        <span class="badge bg-success fs-6">
+
+                            {{ candidate.votes }}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <div class="progress">
+
+                            <div
+
+                                class="progress-bar bg-success"
+
+                                role="progressbar"
+
+                                style="width: {{ percentage }}%;"
+
+                                aria-valuenow="{{ percentage }}"
+
+                                aria-valuemin="0"
+
+                                aria-valuemax="100">
+
+                                {{ percentage }}%
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
 
 </div>
+
+<!-- Back Button -->
+
+<div class="text-center mt-5 mb-4">
+
+    <a href="/dashboard"
+
+       class="btn btn-primary btn-lg">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Back to Dashboard
+
+    </a>
 
 </div>
 
 <!-- Live Clock -->
 <script>
 
-function updateTime(){
+function updateTime() {
 
     const now = new Date();
 
     document.getElementById("time").innerHTML =
-    now.toLocaleTimeString();
+        now.toLocaleTimeString();
 
 }
 
 updateTime();
 
-setInterval(updateTime,1000);
+setInterval(updateTime, 1000);
+
+</script>
+
+<!-- Chart.js -->
+
+<script>
+
+const labels = {{ chart_labels | tojson | safe }};
+const votes = {{ chart_votes | tojson | safe }};
+
+// ==========================
+// Bar Chart
+// ==========================
+
+new Chart(document.getElementById("barChart"), {
+
+    type: "bar",
+
+    data: {
+
+        labels: labels,
+
+        datasets: [{
+
+            label: "Votes",
+
+            data: votes,
+
+            borderRadius: 10,
+
+            backgroundColor: [
+
+                "#0d6efd",
+
+                "#198754",
+
+                "#ffc107",
+
+                "#dc3545",
+
+                "#6610f2",
+
+                "#20c997",
+
+                "#fd7e14",
+
+                "#6f42c1"
+
+            ]
+
+        }]
+
+    },
+
+    options: {
+
+        responsive: true,
+
+        maintainAspectRatio: false,
+
+        scales: {
+
+            y: {
+
+                beginAtZero: true,
+
+                ticks: {
+
+                    precision: 0
+
+                }
+
+            }
+
+        },
+
+        plugins: {
+
+            legend: {
+
+                display: false
+
+            }
+
+        }
+
+    }
+
+});
+
+
+// ==========================
+// Pie Chart
+// ==========================
+
+new Chart(document.getElementById("pieChart"), {
+
+    type: "pie",
+
+    data: {
+
+        labels: labels,
+
+        datasets: [{
+
+            data: votes,
+
+            backgroundColor: [
+
+                "#0d6efd",
+
+                "#198754",
+
+                "#ffc107",
+
+                "#dc3545",
+
+                "#6610f2",
+
+                "#20c997",
+
+                "#fd7e14",
+
+                "#6f42c1"
+
+            ]
+
+        }]
+
+    },
+
+    options: {
+
+        responsive: true,
+
+        maintainAspectRatio: false,
+
+        plugins: {
+
+            legend: {
+
+                position: "bottom"
+
+            }
+
+        }
+
+    }
+
+});
 
 </script>
 
 <!-- Auto Refresh -->
+
 <script>
 
 setInterval(function(){
@@ -287,146 +720,6 @@ setInterval(function(){
     location.reload();
 
 },5000);
-
-</script>
-
-<!-- Charts -->
-<script>
-
-const labels = {{ chart_labels | tojson | safe }};
-const votes = {{ chart_votes | tojson | safe }};
-
-new Chart(document.getElementById("barChart"),{
-
-type:"bar",
-
-data:{
-
-labels:labels,
-
-datasets:[{
-
-label:"Votes",
-
-data:votes,
-
-backgroundColor:[
-"#0d6efd",
-"#198754",
-"#ffc107",
-"#dc3545",
-"#6610f2",
-"#20c997"
-]
-
-}]
-
-},
-
-options:{
-responsive:true,
-plugins:{
-legend:{
-display:false
-}
-}
-}
-
-});
-
-new Chart(document.getElementById("pieChart"),{
-
-type:"pie",
-
-data:{
-
-labels:labels,
-
-datasets:[{
-
-data:votes,
-
-backgroundColor:[
-"#0d6efd",
-"#198754",
-"#ffc107",
-"#dc3545",
-"#6610f2",
-"#20c997"
-]
-
-}]
-
-}
-
-});
-
-</script>
-
-new Chart(document.getElementById("barChart"),{
-
-type:"bar",
-
-data:{
-
-labels:labels,
-
-datasets:[{
-
-label:"Votes",
-
-data:votes,
-
-backgroundColor:[
-"#0d6efd",
-"#198754",
-"#ffc107",
-"#dc3545",
-"#6610f2",
-"#20c997"
-]
-
-}]
-
-},
-
-options:{
-responsive:true,
-plugins:{
-legend:{
-display:false
-}
-}
-}
-
-});
-
-new Chart(document.getElementById("pieChart"),{
-
-type:"pie",
-
-data:{
-
-labels:labels,
-
-datasets:[{
-
-data:votes,
-
-backgroundColor:[
-"#0d6efd",
-"#198754",
-"#ffc107",
-"#dc3545",
-"#6610f2",
-"#20c997"
-]
-
-}]
-
-}
-
-});
 
 </script>
 

@@ -31,8 +31,10 @@ class Candidate(db.Model):
 
     party = db.Column(db.String(100), nullable=False)
 
-    votes = db.Column(db.Integer, default=0)
+    photo = db.Column(db.String(255))
 
+    votes = db.Column(db.Integer, default=0)
+    
     def __repr__(self):
         return f"<Candidate {self.name}>"
 

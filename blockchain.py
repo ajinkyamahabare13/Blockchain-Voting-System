@@ -20,7 +20,7 @@ with open("build/contracts/Voting.json") as f:
 
 abi = contract_json["abi"]
 
-contract_address = "0x84fA701AA50A601Fcd7B22FBfbe481997bC9D2f0"
+contract_address = "0x1892D7A90F3f89D00cD7303a51033821222ADa3F"
 
 contract = web3.eth.contract(
     address=contract_address,
@@ -28,6 +28,7 @@ contract = web3.eth.contract(
 )
 
 web3.eth.default_account = web3.eth.accounts[0]
+print("Default Account:", web3.eth.default_account)
 
 # ==========================
 # Vote Function
