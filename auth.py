@@ -6,7 +6,7 @@ from flask import (
     redirect
 )
 
-from models import User
+from models import User, db
 
 
 def login_required(view_function):
@@ -45,9 +45,10 @@ def admin_required(view_function):
 
             return redirect("/login")
 
-        user = User.query.get(
-            session["user_id"]
-        )
+        user = db.session.get(
+        User,
+        session["user_id"]
+       ) 
 
         if user is None:
 

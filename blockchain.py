@@ -11,7 +11,6 @@ ganache_url = "http://127.0.0.1:7545"
 
 web3 = Web3(Web3.HTTPProvider(ganache_url))
 
-print("Connected:", web3.is_connected())
 
 
 # ==========================
@@ -35,18 +34,22 @@ contract = web3.eth.contract(
 
 )
 
+def ensure_blockchain_connection():
+    if not web3.is_connected():
+        raise ConnectionError(
+            "Unable to connect to Ganache."
+        )
+    
+def get_ganache_accounts():
+    if not web3.is_connected():
+        raise ConnectionError(
+            "Unable to connect to Ganache."
+        )
 
-# ==========================
-# Ganache Accounts
-# ==========================
-
-ganache_accounts = web3.eth.accounts
-
-print("Ganache Accounts:")
-
-for index, account in enumerate(ganache_accounts):
-
-    print(index, account)
+    return [
+        web3.to_checksum_address(account)
+        for account in web3.eth.accounts
+    ]
 
 
 # ==========================
@@ -103,8 +106,7 @@ def get_candidate_count():
 # ==========================
 
 def reset_election():
-
-    owner_account = web3.eth.accounts[0]
+    owner_account = get_ganache_accounts()[0]
 
     tx_hash = contract.functions.resetElection().transact({
         "from": owner_account
@@ -122,7 +124,7 @@ def reset_election():
 
 def add_candidate(name, party):
 
-    owner_account = web3.eth.accounts[0]
+    owner_account = get_ganache_accounts()[0]
 
     tx_hash = contract.functions.addCandidate(
         name,
