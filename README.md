@@ -178,3 +178,39 @@ flowchart TD
 
     C --> M["Results & Report Generation"]
     M --> N["PDF / Excel Reports"]
+
+ ## Database ER Diagram
+
+```mermaid
+erDiagram
+    USER {
+        int id PK
+        string full_name
+        string email UK
+        string password
+        string wallet_address
+        boolean has_voted
+        boolean is_admin
+    }
+
+    CANDIDATE {
+        int id PK
+        string name
+        string party
+        string photo
+        int votes
+    }
+
+    TRANSACTION {
+        int id PK
+        string voter_name
+        string candidate_name
+        string tx_hash
+        datetime timestamp
+    }
+
+    ELECTION {
+        int id PK
+        boolean is_active
+    }
+```
