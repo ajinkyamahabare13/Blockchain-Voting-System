@@ -178,8 +178,9 @@ flowchart TD
 
     C --> M["Results & Report Generation"]
     M --> N["PDF / Excel Reports"]
+```
 
- ## Database ER Diagram
+## Database ER Diagram
 
 ```mermaid
 erDiagram
