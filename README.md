@@ -83,10 +83,22 @@ pip install -r requirements.txt
 
 ### Blockchain Setup
 
-1. Start Ganache.
-2. Compile and deploy the smart contract using the project's Truffle configuration.
-3. Ensure the deployed contract address in `blockchain.py` matches the deployment.
-4. Keep Ganache running while using the application.
+1. Start Ganache and ensure it is listening at `http://127.0.0.1:7545`.
+2. Open a terminal in the project directory.
+3. Compile the smart contract:
+
+   ```bash
+   truffle compile
+   ```
+
+4. Deploy the contract to the configured Ganache development network:
+
+   ```bash
+   truffle migrate --network development
+   ```
+
+5. Ensure the deployed contract address and ABI used by `blockchain.py` match the deployment.
+6. Keep Ganache running while using the application.
 
 ### Run the Application
 
@@ -96,7 +108,6 @@ python app.py
 
 Open the application in your browser:
 
-```text
 http://127.0.0.1:5000
 ```
 
