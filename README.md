@@ -63,13 +63,13 @@ git clone https://github.com/ajinkyamahabare13/Blockchain-Voting-System.git
 cd Blockchain-Voting-System
 ```
 
-Create and activate a virtual environment:
+Create a virtual environment:
 
 ```bash
 python -m venv venv
 ```
 
-Windows PowerShell:
+Activate it in Windows PowerShell:
 
 ```powershell
 .\venv\Scripts\Activate.ps1
@@ -84,7 +84,9 @@ pip install -r requirements.txt
 ### Blockchain Setup
 
 1. Start Ganache and ensure it is listening at `http://127.0.0.1:7545`.
+
 2. Open a terminal in the project directory.
+
 3. Compile the smart contract:
 
    ```bash
@@ -98,7 +100,10 @@ pip install -r requirements.txt
    ```
 
 5. Ensure the deployed contract address and ABI used by `blockchain.py` match the deployment.
+
 6. Keep Ganache running while using the application.
+
+> **Note:** Deploying the contract creates or updates a deployment on the configured blockchain. If the contract address changes, update the address used by the Flask application before running it.
 
 ### Run the Application
 
@@ -109,11 +114,10 @@ python app.py
 Open the application in your browser:
 
 http://127.0.0.1:5000
-```
 
 ## Security and Reliability
 
-The project includes login/session checks, admin access control, CSRF protection, duplicate-vote prevention, election-state validation, and synchronization checks between blockchain and database records.
+The project includes login and session checks, admin access control, CSRF protection, duplicate-vote prevention, election-state validation, and synchronization checks between blockchain and database records.
 
 ## Testing
 
@@ -137,58 +141,49 @@ The V3 application was manually tested for:
 * Automated test suite and continuous integration
 * Improved deployment and monitoring
 
-## Author
-
-**Ajinkya Mahabare**
-
-GitHub: [ajinkyamahabare13](https://github.com/ajinkyamahabare13)
-
----
-
-*This is an educational project demonstrating blockchain integration in an electronic voting application. It is not certified or intended for use in official public elections.*
-
 ## Screenshots
 
 ### Login Page
+
 ![Login Page](screenshots/login.png)
 
 ### Admin Dashboard
+
 ![Admin Dashboard](screenshots/admin_dashboard.png)
 
 ### Voting Page
+
 ![Voting Page](screenshots/voting_page.png)
 
 ### Election Results
+
 ![Results Page](screenshots/results.png)
 
 ### Vote Success
+
 ![Vote Success](screenshots/vote_success.png)
 
 ### Candidate Management
-![Candidate Management](screenshots/candidate_management.png)
 
+![Candidate Management](screenshots/candidate_management.png)
 
 ## System Architecture
 
 ```mermaid
 flowchart TD
-    A["Voter / Admin"] --> B["Frontend<br/>HTML, CSS, Bootstrap"]
+    A["Voter or Admin"] --> B["Frontend: HTML, CSS, Bootstrap"]
     B --> C["Flask Application"]
-    C --> D["Authentication & Access Control"]
+    C --> D["Authentication and Access Control"]
     C --> E["Voting and Admin Logic"]
-
     E --> F["Web3.py"]
     F --> G["Ganache Blockchain"]
     G --> H["Solidity Voting Smart Contract"]
-
     C --> I["SQLAlchemy ORM"]
     I --> J["SQLite Database"]
-
     H --> K["Blockchain Vote Records"]
-    J --> L["Users, Candidates,<br/>Transactions & Election State"]
-
-    C --> M["Results & Report Generation"]
-    M --> N["PDF / Excel Reports"]
+    J --> L["Users, Candidates, Transactions, and Election State"]
+    C --> M["Results and Report Generation"]
+    M --> N["PDF and Excel Reports"]
 ```
 
 ## Database ER Diagram
@@ -226,3 +221,13 @@ erDiagram
         boolean is_active
     }
 ```
+
+## Author
+
+**Ajinkya Mahabare**
+
+GitHub: [ajinkyamahabare13](https://github.com/ajinkyamahabare13)
+
+---
+
+*This is an educational project demonstrating blockchain integration in an electronic voting application. It is not certified or intended for use in official public elections.*
